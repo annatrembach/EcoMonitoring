@@ -1,0 +1,14 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.EcoMonitoring</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/EcoMonitoring</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">0000</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping class="com.example.model.Objects"/>
+        <mapping class="com.example.model.Substances"/>
+        <mapping class="com.example.model.SubstanceHistory"/>
+    </session-factory>
+</hibernate-configuration>
