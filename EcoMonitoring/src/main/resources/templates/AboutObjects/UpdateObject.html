@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Object</title>
+</head>
+<body>
+    <h1>Edit Object</h1>
+    <form action="/UpdateObject" method="post">
+        <input type="hidden" name="id" th:value="${object.id}">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${object.name}" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" th:value="${object.location}" required>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</body>
+</html>

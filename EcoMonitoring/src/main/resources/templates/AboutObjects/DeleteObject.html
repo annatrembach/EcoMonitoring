@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Object</title>
+</head>
+<body>
+    <h1>Delete Object</h1>
+
+    <div th:if="${object != null}">
+        <p>Are you sure you want to delete this object?</p>
+        <p>Object ID: <span th:text="${object.id}"></span></p>
+        <p>Name: <span th:text="${object.name}"></span></p>
+        <p>Location: <span th:text="${object.location}"></span></p>
+
+        <form action="/DeleteObject" method="post">
+            <input type="hidden" name="id" th:value="${object.id}">
+            <button type="submit">Delete Object</button>
+        </form>
+    </div>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Object</title>
+</head>
+<body>
+    <h1>Find Object</h1>
+    <form action="/FindObject" method="post">
+        <label for="id">Enter Object ID:</label>
+        <input type="text" id="id" name="id" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Object Information</h2>
+    <div th:if="${object != null}">
+        <p><strong>Name:</strong> <span th:text="${object.name}"></span></p>
+        <p><strong>Location:</strong> <span th:text="${object.location}"></span></p>
+    </div>
+
+    <div th:if="${error != null}">
+        <p th:text="${error}" style="color: red;"></p>
+    </div>
+
+</body>
+</html>
