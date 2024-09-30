@@ -19,8 +19,8 @@ public class SubstanceController {
     Repository<Substances> repository;
 
     @GetMapping("/Substances")
-    public String substancesPage(Model model) {
-        List<Substances> substances = repository.findAll(Substances.class);
+    public String substancesPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
+        List<Substances> substances = repository.findWithSorting(Substances.class, fieldForSort);
         model.addAttribute("substances", substances);
         return "AboutSubstances/Substances";
     }

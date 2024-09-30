@@ -8,7 +8,24 @@
 <body>
 <div class="container mt-4">
     <h1>History</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/}">Main Page</a>
+    <br>
     <a class="btn btn-primary mb-3" th:href="@{/CreateSubstanceHistory}">Create History</a>
+    <br>
+    <form method="get" action="#" th:action="@{/SubstanceHistory}">
+        <div class="mb-3">
+            <label for="sortField" class="form-label">Sort by:</label>
+            <select id="sortField" name="sortField" class="form-select">
+                <option value=id>Id</option>
+                <option value="substance">Substance</option>
+                <option value="substanceValue">Substance Value</option>
+                <option value="yearOfObservation">Year Of Observation</option>
+                <option value="object">Object</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Sort</button>
+    </form>
+    <br>
     <table class="table table-bordered">
         <thead>
         <tr>

@@ -19,8 +19,8 @@ public class ObjectsController {
     Repository<Objects> repository;
 
     @GetMapping("/Objects")
-    public String objectsPage(Model model) {
-        List<Objects> objects = repository.findAll(Objects.class);
+    public String objectsPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
+        List<Objects> objects = repository.findWithSorting(Objects.class, fieldForSort, true);
         model.addAttribute("objects", objects);
         return "AboutObjects/Objects";
     }

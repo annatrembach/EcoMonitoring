@@ -7,8 +7,23 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h1>History</h1>
+    <h1>Substances</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/}">Main Page</a>
+    <br>
     <a class="btn btn-primary mb-3" th:href="@{/CreateSubstance}">Create Substance</a>
+    <br>
+    <form method="get" action="#" th:action="@{/Substances}">
+        <div class="mb-3">
+            <label for="fieldForSort" class="form-label">Sort by:</label>
+            <select id="fieldForSort" name="fieldForSort" class="form-select">
+                <option value="id">Id</option>
+                <option value="name">Name</option>
+                <option value="type">Type</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Sort</button>
+    </form>
+    <br>
     <table class="table table-bordered">
         <thead>
         <tr>

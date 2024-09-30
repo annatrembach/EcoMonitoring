@@ -20,8 +20,8 @@ public class SubstanceHistoryController {
     Repository<SubstanceHistory> repository;
 
     @GetMapping("/SubstanceHistory")
-    public String substanceHistoryPage(Model model) {
-        List<SubstanceHistory> substanceHistoryList = repository.findAll(SubstanceHistory.class);
+    public String substanceHistoryPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
+        List<SubstanceHistory> substanceHistoryList = repository.findWithSorting(SubstanceHistory.class, fieldForSort);
         model.addAttribute("substanceHistoryList", substanceHistoryList);
         return "AboutSubstanceHistory/SubstanceHistory";
     }

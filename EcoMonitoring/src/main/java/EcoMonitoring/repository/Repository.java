@@ -1,9 +1,13 @@
 package EcoMonitoring.repository;
 
 import EcoMonitoring.util.Util;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -45,7 +49,6 @@ public class Repository<T> implements IRepository<T> {
         Session session = Util.getSessionFactory().openSession();
         List<T> entities = null;
         try {
-            // Створюємо запит HQL для отримання всіх записів сутності
             Query<T> query = session.createQuery("from " + tempClass.getSimpleName(), tempClass);
             entities = query.list();
         } catch (Exception e) {
@@ -90,4 +93,35 @@ public class Repository<T> implements IRepository<T> {
         }
     }
 
+    public <T> List<T> findWithSorting(Class<T> entityClass, String nameOfField, boolean isAsc) {
+        Session session = Util.getSessionFactory().openSession();
+        List<T> entities = null;
+        try {
+            session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(entityClass);
+            Root<T> root = cq.from(entityClass);
+
+            if(isAsc)
+            {
+                cq.orderBy(cb.asc(root.get(nameOfField)));
+            } else {
+                cq.orderBy(cb.desc(root.get(nameOfField)));
+            }
+
+            entities = session.createQuery(cq).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return entities;
+    }
 }
