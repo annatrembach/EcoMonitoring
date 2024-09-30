@@ -104,7 +104,7 @@ public class ObjectsController {
         return "AboutObjects/DeleteObject";
     }
     @PostMapping("/DeleteObject")
-    public String deleteObjectPost(Object object) {
+    public String deleteObjectPost(Objects object) {
         repository.delete(object);
         return "AboutObjects/Objects";
     }

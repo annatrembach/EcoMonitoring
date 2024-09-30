@@ -2,6 +2,8 @@ package EcoMonitoring.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Substances")
 public class Substances {
@@ -17,9 +19,8 @@ public class Substances {
     @Column(name = "type")
     public int type;
 
-    @ManyToOne
-    @JoinColumn(name = "historyId")
-    public SubstanceHistory history;
+    @OneToMany(mappedBy = "substance")
+    public List<SubstanceHistory> substanceHistories;
 
     //Constructors
     public Substances() {
@@ -53,10 +54,4 @@ public class Substances {
         this.type = type;
     }
 
-    public SubstanceHistory getHistory() {
-        return history;
-    }
-    public void setHistory(SubstanceHistory history) {
-        this.history = history;
-    }
 }

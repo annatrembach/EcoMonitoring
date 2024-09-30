@@ -19,21 +19,23 @@ public class SubstanceHistory {
     @Column(name = "substanceValue")
     public double substanceValue;
 
-    @OneToMany(mappedBy = "history")
-    public List<Objects> objects;
+    @ManyToOne
+    @JoinColumn(name = "objectId")
+    public Objects object;
 
-    @OneToMany(mappedBy = "history")
-    public List<Substances> substances;
+    @ManyToOne
+    @JoinColumn(name = "substanceId")
+    public Substances substance;
 
     //Constructors
     public SubstanceHistory() {
     }
 
-    public SubstanceHistory(String yearOfObservation, double substanceValue, List<Objects> objects, List<Substances> substances) {
+    public SubstanceHistory(String yearOfObservation, double substanceValue, Objects object, Substances substance) {
         this.yearOfObservation = yearOfObservation;
         this.substanceValue = substanceValue;
-        this.objects = objects;
-        this.substances = substances;
+        this.object = object;
+        this.substance = substance;
     }
 
     //Getters and Setters
@@ -58,16 +60,17 @@ public class SubstanceHistory {
         this.substanceValue = substanceValue;
     }
 
-    public List<Objects> getObjects() {
-        return objects;
+    public Objects getObject() {
+        return object;
     }
-    public void setObjects(List<Objects> objects) {
-        this.objects = objects;
+    public void setObject(Objects object) {
+        this.object = object;
     }
-    public List<Substances> getSubstances() {
-        return substances;
+
+    public Substances getSubstance() {
+        return substance;
     }
-    public void setSubstances(List<Substances> substances) {
-        this.substances = substances;
+    public void setSubstance(Substances substance) {
+        this.substance = substance;
     }
 }

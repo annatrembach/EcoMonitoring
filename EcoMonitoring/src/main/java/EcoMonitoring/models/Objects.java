@@ -5,6 +5,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Objects")
 public class Objects {
@@ -20,18 +22,16 @@ public class Objects {
     @Column(name = "location")
     public String location;
 
-    @ManyToOne
-    @JoinColumn(name = "historyId")
-    public SubstanceHistory history;
+    @OneToMany(mappedBy = "object")
+    public List<SubstanceHistory> substanceHistories;
 
     //Constructors
     public Objects() {
     }
 
-    public Objects(String name, String location, SubstanceHistory history) {
+    public Objects(String name, String location) {
         this.name = name;
         this.location = location;
-        this.history = history;
     }
 
     //Getters and Setters
@@ -57,10 +57,4 @@ public class Objects {
         this.location = location;
     }
 
-    public SubstanceHistory getHistory() {
-        return history;
-    }
-    public void setHistory(SubstanceHistory history) {
-        this.history = history;
-    }
 }
