@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Substance History</title>
+</head>
+<body>
+    <h1>Create Substance History</h1>
+    <form class="form" th:action="@{/CreateSubstanceHistory}" method="post">
+        <label for="substanceId">Substance ID:</label>
+        <input type="number" id="substanceId" name="substanceId" placeholder="Substance ID" required><br>
+
+        <label for="substanceValue">Substance Value:</label>
+        <input type="text" id="substanceValue" name="substanceValue" placeholder="Substance Value" required><br>
+
+        <label for="yearOfObservation">Year of Observation:</label>
+        <input type="number" id="yearOfObservation" name="yearOfObservation" placeholder="Year of Observation" required><br>
+
+        <label for="objectId">Object ID:</label>
+        <input type="number" id="objectId" name="objectId" placeholder="Object ID" required><br>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

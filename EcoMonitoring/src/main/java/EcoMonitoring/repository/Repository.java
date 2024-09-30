@@ -3,6 +3,9 @@ package EcoMonitoring.repository;
 import EcoMonitoring.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 @org.springframework.stereotype.Repository
 public class Repository<T> implements IRepository<T> {
@@ -35,6 +38,24 @@ public class Repository<T> implements IRepository<T> {
             session.close();
         }
         return entity;
+    }
+
+    @Override
+    public <T> List<T> findAll(Class<T> tempClass) {
+        Session session = Util.getSessionFactory().openSession();
+        List<T> entities = null;
+        try {
+            // Створюємо запит HQL для отримання всіх записів сутності
+            Query<T> query = session.createQuery("from " + tempClass.getSimpleName(), tempClass);
+            entities = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return entities;
     }
 
     @Override

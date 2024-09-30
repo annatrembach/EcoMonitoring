@@ -8,26 +8,26 @@
 <body>
 <div class="container mt-4">
     <h1>History</h1>
-    <a class="btn btn-primary mb-3" th:href="@{/CreateObject}">Create Object</a>
+    <a class="btn btn-primary mb-3" th:href="@{/CreateSubstance}">Create Substance</a>
     <table class="table table-bordered">
         <thead>
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Location</th>
+            <th>Type</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="object : ${objects}">
-            <td th:text="${object.id}"></td>
-            <td th:text="${object.name}"></td>
-            <td th:text="${object.location}"></td>
+        <tr th:each="substance : ${substances}">
+            <td th:text="${substance.id}"></td>
+            <td th:text="${substance.name}"></td>
+            <td th:text="${substance.type}"></td>
             <td style="white-space: nowrap;">
                 <a class="btn btn-primary btn-sm"
-                   th:href="@{/UpdateObject(id=${object.id})}">Edit</a>
+                   th:href="@{/UpdateSubstance(id=${substance.id})}">Edit</a>
                 <a class="btn btn-danger btn-sm"
-                   th:href="@{/DeleteObject(id=${object.id})}">Delete</a>
+                   th:href="@{/DeleteSubstance(id=${substance.id})}">Delete</a>
             </td>
         </tr>
         </tbody>

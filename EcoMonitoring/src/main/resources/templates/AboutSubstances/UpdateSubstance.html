@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Substance</title>
+</head>
+<body>
+    <h1>Edit Substance</h1>
+    <form action="/UpdateSubstance" method="post">
+        <input type="hidden" name="id" th:value="${substance.id}">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${substance.name}" required>
+
+        <label for="type">Type:</label>
+        <input type="number" id="type" name="type" th:value="${substance.type}" required>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</body>
+</html>

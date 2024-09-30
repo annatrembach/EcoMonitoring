@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Substance History</title>
+</head>
+<body>
+    <h1>Delete Substance History</h1>
+
+    <div th:if="${substanceHistory != null}">
+        <p>Are you sure you want to delete this history?</p>
+        <p>Substance history ID: <span th:text="${substanceHistory.id}"></span></p>
+        <p>Name of substance: <span th:text="${substanceHistory.substance.name}"></span></p>
+        <p>Substance value: <span th:text="${substanceHistory.substanceValue}"></span></p>
+        <p>Year of observation: <span th:text="${substanceHistory.yearOfObservation}"></span></p>
+        <p>Object name: <span th:text="${substanceHistory.object.name}"></span></p>
+
+        <form action="/DeleteSubstanceHistory" method="post">
+            <input type="hidden" name="id" th:value="${substanceHistory.id}">
+            <button type="submit">Delete Substance History</button>
+        </form>
+    </div>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</body>
+</html>

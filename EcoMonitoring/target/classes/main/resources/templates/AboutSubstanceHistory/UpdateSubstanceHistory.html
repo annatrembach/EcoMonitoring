@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Substance History</title>
+</head>
+<body>
+    <h1>Edit Substance History</h1>
+    <form action="/UpdateSubstanceHistory" method="post">
+        <input type="hidden" name="id" th:value="${substanceHistory.id}">
+
+        <label for="substanceId">Substance ID:</label>
+        <input type="number" id="substanceId" name="substanceId" th:value="${substanceHistory.substance.id}" required>
+
+        <label for="substanceValue">Substance Value:</label>
+        <input type="text" id="substanceValue" name="substanceValue" th:value="${substanceHistory.substanceValue}" required>
+
+        <label for="yearOfObservation">Year of Observation:</label>
+        <input type="text" id="yearOfObservation" name="yearOfObservation" th:value="${substanceHistory.yearOfObservation}" required>
+
+        <label for="objectId">Object ID:</label>
+        <input type="number" id="objectId" name="objectId" th:value="${substanceHistory.object.id}" required>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</body>
+</html>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class SubstanceController {
 
@@ -17,7 +19,9 @@ public class SubstanceController {
     Repository<Substances> repository;
 
     @GetMapping("/Substances")
-    public String substancesPage() {
+    public String substancesPage(Model model) {
+        List<Substances> substances = repository.findAll(Substances.class);
+        model.addAttribute("substances", substances);
         return "AboutSubstances/Substances";
     }
 
@@ -29,7 +33,7 @@ public class SubstanceController {
     @PostMapping("/CreateSubstance")
     public String createSubstancePost(Substances substance) {
         repository.create(substance);
-        return "AboutSubstances/Substances";
+        return "redirect:/Substances";
     }
 
     @GetMapping("/FindSubstance")
@@ -48,25 +52,14 @@ public class SubstanceController {
         return "AboutSubstances/FindSubstance";
     }
 
-    @GetMapping("/FindSubstanceToUpdate")
-    public String findSubstanceToUpdate() {
-        return "AboutSubstances/FindSubstanceToUpdate";
-    }
-
-    @PostMapping("/FindSubstanceToUpdate")
-    public String findSubstanceToUpdatePost(@RequestParam("id") Long id, Model model) {
+    @GetMapping("/UpdateSubstance")
+    public String updateSubstance(Long id, Model model) {
         Substances substance = repository.findById(Substances.class, id);
         if (substance != null) {
             model.addAttribute("substance", substance);
-            return "AboutSubstances/UpdateSubstance";
         } else {
-            model.addAttribute("error", "Substance not found");
-            return "AboutSubstances/FindSubstanceToUpdate";
+            model.addAttribute("error", "Substance not found.");
         }
-    }
-
-    @GetMapping("/UpdateSubstance")
-    public String updateSubstance() {
         return "AboutSubstances/UpdateSubstance";
     }
 
@@ -85,34 +78,23 @@ public class SubstanceController {
         } else {
             model.addAttribute("error", "Substance not found for updating.");
         }
-        return "AboutSubstances/Substances";
-    }
-
-    @GetMapping("/FindSubstanceToDelete")
-    public String findSubstanceToDelete() {
-        return "AboutSubstances/FindSubstanceToDelete";
-    }
-
-    @PostMapping("/FindSubstanceToDelete")
-    public String findSubstanceToDeletePost(@RequestParam("id") Long id, Model model) {
-        Substances substance = repository.findById(Substances.class, id);
-        if (substance != null) {
-            model.addAttribute("substance", substance);
-            return "AboutSubstances/DeleteSubstance";
-        } else {
-            model.addAttribute("error", "Substance not found");
-            return "AboutSubstances/FindSubstanceToDelete";
-        }
+        return "redirect:/Substances";
     }
 
     @GetMapping("/DeleteSubstance")
-    public String deleteSubstance() {
+    public String deleteSubstance(Long id, Model model) {
+        Substances substance = repository.findById(Substances.class, id);
+        if (substance != null) {
+            model.addAttribute("substance", substance);
+        } else {
+            model.addAttribute("error", "Substance not found.");
+        }
         return "AboutSubstances/DeleteSubstance";
     }
 
     @PostMapping("/DeleteSubstance")
     public String deleteSubstancePost(Substances substance) {
         repository.delete(substance);
-        return "AboutSubstances/Substances";
+        return "redirect:/Substances";
     }
 }

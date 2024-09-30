@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class SubstanceHistoryController {
 
@@ -18,24 +20,29 @@ public class SubstanceHistoryController {
     Repository<SubstanceHistory> repository;
 
     @GetMapping("/SubstanceHistory")
-    public String substanceHistoryPage() {
-        return "AboutSubstanceHistories/SubstanceHistory";
+    public String substanceHistoryPage(Model model) {
+        List<SubstanceHistory> substanceHistoryList = repository.findAll(SubstanceHistory.class);
+        model.addAttribute("substanceHistoryList", substanceHistoryList);
+        return "AboutSubstanceHistory/SubstanceHistory";
     }
 
     @GetMapping("/CreateSubstanceHistory")
     public String createSubstanceHistory() {
-        return "AboutSubstanceHistories/CreateSubstanceHistory";
+        return "AboutSubstanceHistory/CreateSubstanceHistory";
     }
 
     @PostMapping("/CreateSubstanceHistory")
-    public String createSubstanceHistoryPost(SubstanceHistory substanceHistory) {
+    public String createSubstanceHistoryPost(SubstanceHistory substanceHistory, @RequestParam("objectId") Long objectId,
+                                                                                @RequestParam("substanceId") Long substanceId) {
+        substanceHistory.setObject(repository.findById(Objects.class, objectId));
+        substanceHistory.setSubstance(repository.findById(Substances.class, substanceId));
         repository.create(substanceHistory);
-        return "AboutSubstanceHistories/SubstanceHistory";
+        return "redirect:/SubstanceHistory";
     }
 
     @GetMapping("/FindSubstanceHistory")
     public String findSubstanceHistory() {
-        return "AboutSubstanceHistories/FindSubstanceHistory";
+        return "AboutSubstanceHistory/FindSubstanceHistory";
     }
 
     @PostMapping("/FindSubstanceHistory")
@@ -46,29 +53,18 @@ public class SubstanceHistoryController {
         } else {
             model.addAttribute("error", "SubstanceHistory not found");
         }
-        return "AboutSubstanceHistories/FindSubstanceHistory";
-    }
-
-    @GetMapping("/FindSubstanceHistoryToUpdate")
-    public String findSubstanceHistoryToUpdate() {
-        return "AboutSubstanceHistories/FindSubstanceHistoryToUpdate";
-    }
-
-    @PostMapping("/FindSubstanceHistoryToUpdate")
-    public String findSubstanceHistoryToUpdatePost(@RequestParam("id") Long id, Model model) {
-        SubstanceHistory substanceHistory = repository.findById(SubstanceHistory.class, id);
-        if (substanceHistory != null) {
-            model.addAttribute("substanceHistory", substanceHistory);
-            return "AboutSubstanceHistories/UpdateSubstanceHistory";
-        } else {
-            model.addAttribute("error", "SubstanceHistory not found");
-            return "AboutSubstanceHistories/FindSubstanceHistoryToUpdate";
-        }
+        return "AboutSubstanceHistory/FindSubstanceHistory";
     }
 
     @GetMapping("/UpdateSubstanceHistory")
-    public String updateSubstanceHistory() {
-        return "AboutSubstanceHistories/UpdateSubstanceHistory";
+    public String updateSubstanceHistory(Long id, Model model) {
+        SubstanceHistory substanceHistory = repository.findById(SubstanceHistory.class, id);
+        if (substanceHistory != null) {
+            model.addAttribute("substanceHistory", substanceHistory);
+        } else {
+            model.addAttribute("error", "Substance History not found.");
+        }
+        return "AboutSubstanceHistory/UpdateSubstanceHistory";
     }
 
     @PostMapping("/UpdateSubstanceHistory")
@@ -90,34 +86,23 @@ public class SubstanceHistoryController {
         } else {
             model.addAttribute("error", "SubstanceHistory not found for updating.");
         }
-        return "AboutSubstanceHistories/SubstanceHistory";
-    }
-
-    @GetMapping("/FindSubstanceHistoryToDelete")
-    public String findSubstanceHistoryToDelete() {
-        return "AboutSubstanceHistories/FindSubstanceHistoryToDelete";
-    }
-
-    @PostMapping("/FindSubstanceHistoryToDelete")
-    public String findSubstanceHistoryToDeletePost(@RequestParam("id") Long id, Model model) {
-        SubstanceHistory substanceHistory = repository.findById(SubstanceHistory.class, id);
-        if (substanceHistory != null) {
-            model.addAttribute("substanceHistory", substanceHistory);
-            return "AboutSubstanceHistories/DeleteSubstanceHistory";
-        } else {
-            model.addAttribute("error", "SubstanceHistory not found");
-            return "AboutSubstanceHistories/FindSubstanceHistoryToDelete";
-        }
+        return "redirect:/SubstanceHistory";
     }
 
     @GetMapping("/DeleteSubstanceHistory")
-    public String deleteSubstanceHistory() {
-        return "AboutSubstanceHistories/DeleteSubstanceHistory";
+    public String deleteSubstanceHistory(Long id, Model model) {
+        SubstanceHistory substanceHistory = repository.findById(SubstanceHistory.class, id);
+        if (substanceHistory != null) {
+            model.addAttribute("substanceHistory", substanceHistory);
+        } else {
+            model.addAttribute("error", "Substance History not found.");
+        }
+        return "AboutSubstanceHistory/DeleteSubstanceHistory";
     }
 
     @PostMapping("/DeleteSubstanceHistory")
     public String deleteSubstanceHistoryPost(SubstanceHistory substanceHistory) {
         repository.delete(substanceHistory);
-        return "AboutSubstanceHistories/SubstanceHistory";
+        return "redirect:/SubstanceHistory";
     }
 }

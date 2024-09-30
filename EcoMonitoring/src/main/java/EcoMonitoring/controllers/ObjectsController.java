@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 
 @Controller
 public class ObjectsController {
@@ -17,7 +19,9 @@ public class ObjectsController {
     Repository<Objects> repository;
 
     @GetMapping("/Objects")
-    public String objectsPage() {
+    public String objectsPage(Model model) {
+        List<Objects> objects = repository.findAll(Objects.class);
+        model.addAttribute("objects", objects);
         return "AboutObjects/Objects";
     }
 
@@ -28,7 +32,7 @@ public class ObjectsController {
     @PostMapping("/CreateObject")
     public String createObjectPost(Objects object) {
         repository.create(object);
-        return "AboutObjects/Objects";
+        return "redirect:/Objects";
     }
 
     @GetMapping("/FindObject")
@@ -46,23 +50,14 @@ public class ObjectsController {
         return "AboutObjects/FindObject";
     }
 
-    @GetMapping("/FindObjectToUpdate")
-    public String findObjectToUpdate(){
-        return "AboutObjects/FindObjectToUpdate";
-    }
-    @PostMapping("/FindObjectToUpdate")
-    public String findObjectToUpdatePost(@RequestParam("id") Long id, Model model) {
+    @GetMapping("/UpdateObject")
+    public String updateObject(Long id, Model model) {
         Objects object = repository.findById(Objects.class, id);
         if (object != null) {
             model.addAttribute("object", object);
-            return "AboutObjects/UpdateObject";
         } else {
-            model.addAttribute("error", "Object not found");
-            return "AboutObjects/FindObjectToUpdate";
+            model.addAttribute("error", "Object not found.");
         }
-    }
-    @GetMapping("/UpdateObject")
-    public String updateObject() {
         return "AboutObjects/UpdateObject";
     }
     @PostMapping("/UpdateObject")
@@ -80,32 +75,22 @@ public class ObjectsController {
         } else {
             model.addAttribute("error", "Object not found for updating.");
         }
-        return "AboutObjects/Objects";
-    }
-
-    @GetMapping("/FindObjectToDelete")
-    public String findObjectToDelete(){
-        return "AboutObjects/FindObjectToDelete";
-    }
-    @PostMapping("/FindObjectToDelete")
-    public String findObjectToDeletePost(@RequestParam("id") Long id, Model model) {
-        Objects object = repository.findById(Objects.class, id);
-        if (object != null) {
-            model.addAttribute("object", object);
-            return "AboutObjects/DeleteObject";
-        } else {
-            model.addAttribute("error", "Object not found");
-            return "AboutObjects/FindObjectToDelete";
-        }
+        return "redirect:/Objects";
     }
 
     @GetMapping("/DeleteObject")
-    public String deleteObject(){
+    public String deleteObject(Long id, Model model){
+        Objects object = repository.findById(Objects.class, id);
+        if (object != null) {
+            model.addAttribute("object", object);
+        } else {
+            model.addAttribute("error", "Object not found.");
+        }
         return "AboutObjects/DeleteObject";
     }
     @PostMapping("/DeleteObject")
     public String deleteObjectPost(Objects object) {
         repository.delete(object);
-        return "AboutObjects/Objects";
+        return "redirect:/Objects";
     }
 }
