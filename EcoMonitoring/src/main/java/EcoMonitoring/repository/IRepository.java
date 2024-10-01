@@ -15,4 +15,6 @@ public interface IRepository<T> {
     <T> void delete(T entity);
 
     <T> List<T> findWithSorting(Class<T> entityClass, String nameOfField, boolean isAsc);
+
+    <T> List<T> findByFieldAndSorting(Class<T> entityClass, String searchField, String searchValue, String sortField, boolean isAsc);
 }

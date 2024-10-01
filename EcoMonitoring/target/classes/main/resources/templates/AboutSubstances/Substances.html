@@ -12,6 +12,20 @@
     <br>
     <a class="btn btn-primary mb-3" th:href="@{/CreateSubstance}">Create Substance</a>
     <br>
+    <br>
+    <form method="get" action="#" th:action="@{/Substances}">
+        <div class="mb-3">
+            <label for="searchField" class="form-label"></label>
+            <select id="searchField" name="searchField" class="form-select">
+                <option> </option>
+                <option value="id">Id</option>
+                <option value="name">Name</option>
+                <option value="type">Type</option>
+            </select>
+            <input type="text" name="searchValue">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <form method="get" action="#" th:action="@{/Substances}">
         <div class="mb-3">
             <label for="fieldForSort" class="form-label">Sort by:</label>

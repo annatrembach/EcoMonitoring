@@ -19,9 +19,17 @@ public class ObjectsController {
     Repository<Objects> repository;
 
     @GetMapping("/Objects")
-    public String objectsPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
-        List<Objects> objects = repository.findWithSorting(Objects.class, fieldForSort, true);
-        model.addAttribute("objects", objects);
+    public String objectsPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort,
+                                           @RequestParam(name = "searchField", required = false) String searchField,
+                                           @RequestParam(name = "searchValue", required = false) String searchValue) {
+        if(searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty())
+        {
+            List<Objects> objects = repository.findByFieldAndSorting(Objects.class, searchField, searchValue, fieldForSort, true);
+            model.addAttribute("objects", objects);
+        } else {
+            List<Objects> objects = repository.findWithSorting(Objects.class, fieldForSort, true);
+            model.addAttribute("objects", objects);
+        }
         return "AboutObjects/Objects";
     }
 

@@ -19,11 +19,20 @@ public class SubstanceController {
     Repository<Substances> repository;
 
     @GetMapping("/Substances")
-    public String substancesPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
-        List<Substances> substances = repository.findWithSorting(Substances.class, fieldForSort);
-        model.addAttribute("substances", substances);
+    public String substancesPage(Model model,
+                                 @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort,
+                                 @RequestParam(name = "searchField", required = false) String searchField,
+                                 @RequestParam(name = "searchValue", required = false) String searchValue) {
+        if(searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty()) {
+            List<Substances> substances = repository.findByFieldAndSorting(Substances.class, searchField, searchValue, fieldForSort, true);
+            model.addAttribute("substances", substances);
+        } else {
+            List<Substances> substances = repository.findWithSorting(Substances.class, fieldForSort, true);
+            model.addAttribute("substances", substances);
+        }
         return "AboutSubstances/Substances";
     }
+
 
     @GetMapping("/CreateSubstance")
     public String createSubstance() {

@@ -14,6 +14,20 @@
     <br>
     <form method="get" action="#" th:action="@{/Objects}">
         <div class="mb-3">
+            <label for="searchField" class="form-label"></label>
+            <select id="searchField" name="searchField" class="form-select">
+                <option> </option>
+                <option value="id">Id</option>
+                <option value="name">Name</option>
+                <option value="location">Location</option>
+            </select>
+            <input type="text" name="searchValue">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <br>
+    <form method="get" action="#" th:action="@{/Objects}">
+        <div class="mb-3">
             <label for="fieldForSort" class="form-label">Sort by:</label>
             <select id="fieldForSort" name="fieldForSort" class="form-select">
                 <option value="id">Id</option>

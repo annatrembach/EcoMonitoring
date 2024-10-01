@@ -20,9 +20,17 @@ public class SubstanceHistoryController {
     Repository<SubstanceHistory> repository;
 
     @GetMapping("/SubstanceHistory")
-    public String substanceHistoryPage(Model model, @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort) {
-        List<SubstanceHistory> substanceHistoryList = repository.findWithSorting(SubstanceHistory.class, fieldForSort);
-        model.addAttribute("substanceHistoryList", substanceHistoryList);
+    public String substanceHistoryPage(Model model,
+                                       @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort,
+                                       @RequestParam(name = "searchField", required = false) String searchField,
+                                       @RequestParam(name = "searchValue", required = false) String searchValue) {
+        if(searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty()) {
+            List<SubstanceHistory> substanceHistory = repository.findByFieldAndSorting(SubstanceHistory.class, searchField, searchValue, fieldForSort, true);
+            model.addAttribute("substanceHistory", substanceHistory);
+        } else {
+            List<SubstanceHistory> substanceHistory = repository.findWithSorting(SubstanceHistory.class, fieldForSort, true);
+            model.addAttribute("substanceHistory", substanceHistory);
+        }
         return "AboutSubstanceHistory/SubstanceHistory";
     }
 

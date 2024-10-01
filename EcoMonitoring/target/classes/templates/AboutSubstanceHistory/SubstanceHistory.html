@@ -14,6 +14,22 @@
     <br>
     <form method="get" action="#" th:action="@{/SubstanceHistory}">
         <div class="mb-3">
+            <label for="searchField" class="form-label"></label>
+            <select id="searchField" name="searchField" class="form-select">
+                <option> </option>
+                <option value=id>Id</option>
+                <option value="substance">Substance</option>
+                <option value="substanceValue">Substance Value</option>
+                <option value="yearOfObservation">Year Of Observation</option>
+                <option value="object">Object</option>
+            </select>
+            <input type="text" name="searchValue">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <br>
+    <form method="get" action="#" th:action="@{/SubstanceHistory}">
+        <div class="mb-3">
             <label for="sortField" class="form-label">Sort by:</label>
             <select id="sortField" name="sortField" class="form-select">
                 <option value=id>Id</option>

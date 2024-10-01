@@ -124,4 +124,38 @@ public class Repository<T> implements IRepository<T> {
         }
         return entities;
     }
+
+    public <T> List<T> findByFieldAndSorting(Class<T> entityClass, String searchField, String searchValue, String sortField, boolean isAsc) {
+        Session session = Util.getSessionFactory().openSession();
+        List<T> entities = null;
+        try {
+            session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(entityClass);
+            Root<T> root = cq.from(entityClass);
+
+            cq.where(cb.equal(root.get(searchField), searchValue));
+
+            if (isAsc) {
+                cq.orderBy(cb.asc(root.get(sortField)));
+            } else {
+                cq.orderBy(cb.desc(root.get(sortField)));
+            }
+
+            entities = session.createQuery(cq).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return entities;
+    }
+
 }
