@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Find Object</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Find Object</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Find Object</h1>
     <form action="/FindObject" method="post">
-        <label for="id">Enter Object ID:</label>
-        <input type="text" id="id" name="id" required>
-        <button type="submit">Search</button>
+        <div class="mb-3">
+            <label for="id" class="form-label">Enter Object ID:</label>
+            <input type="text" id="id" name="id" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
-    <h2>Object Information</h2>
-    <div th:if="${object != null}">
+    <h2 class="mt-4">Object Information</h2>
+    <div th:if="${object != null}" class="alert alert-info">
         <p><strong>Name:</strong> <span th:text="${object.name}"></span></p>
         <p><strong>Location:</strong> <span th:text="${object.location}"></span></p>
     </div>
 
-    <div th:if="${error != null}">
-        <p th:text="${error}" style="color: red;"></p>
+    <div th:if="${error != null}" class="text-danger">
+        <p th:text="${error}"></p>
     </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

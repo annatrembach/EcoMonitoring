@@ -2,42 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>History</title>
+    <title>Substances</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <!-- Додано підключення Bootstrap Icons -->
 </head>
 <body>
 <div class="container mt-4">
     <h1>Substances</h1>
-    <a class="btn btn-primary mb-3" th:href="@{/}">Main Page</a>
-    <br>
-    <a class="btn btn-primary mb-3" th:href="@{/CreateSubstance}">Create Substance</a>
-    <br>
-    <br>
-    <form method="get" action="#" th:action="@{/Substances}">
-        <div class="mb-3">
-            <label for="searchField" class="form-label"></label>
-            <select id="searchField" name="searchField" class="form-select">
-                <option> </option>
-                <option value="id">Id</option>
-                <option value="name">Name</option>
-                <option value="type">Type</option>
-            </select>
-            <input type="text" name="searchValue">
+    <a class="btn btn-primary mb-3" th:href="@{/}"><i class="bi bi-house-fill"></i></a> <!-- Змінено на іконку house-fill -->
+    <a class="btn btn-success mb-3" th:href="@{/CreateSubstance}">Create Substance</a> <!-- Змінено на зелений -->
+
+    <div class="d-flex justify-content-end mb-4"> <!-- Використовуємо d-flex для вирівнювання вправо -->
+        <div class="me-3"> <!-- Додаємо відступ між формами -->
+            <h4>Search</h4>
+            <form method="get" action="#" th:action="@{/Substances}">
+                <div class="input-group mb-3">
+                    <select id="searchField" name="searchField" class="form-select">
+                        <option value="" disabled selected>Select field</option>
+                        <option value="id">Id</option>
+                        <option value="name">Name</option>
+                        <option value="type">Type</option>
+                    </select>
+                    <input type="text" name="searchValue" class="form-control" placeholder="Search value">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-    <form method="get" action="#" th:action="@{/Substances}">
-        <div class="mb-3">
-            <label for="fieldForSort" class="form-label">Sort by:</label>
-            <select id="fieldForSort" name="fieldForSort" class="form-select">
-                <option value="id">Id</option>
-                <option value="name">Name</option>
-                <option value="type">Type</option>
-            </select>
+
+        <div>
+            <h4>Sort by</h4>
+            <form method="get" action="#" th:action="@{/Substances}">
+                <div class="input-group mb-3">
+                    <select id="fieldForSort" name="fieldForSort" class="form-select">
+                        <option value="id">Id</option>
+                        <option value="name">Name</option>
+                        <option value="type">Type</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Sort</button>
+                </div>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Sort</button>
-    </form>
-    <br>
+    </div>
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -62,6 +68,7 @@
         </tbody>
     </table>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
