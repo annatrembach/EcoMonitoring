@@ -36,25 +36,23 @@ public class SubstanceHistoryController {
 
     @GetMapping("/CreateSubstanceHistory")
     public String createSubstanceHistory(Model model) {
-        // Fetch all existing objects and substances to display in the dropdowns
-        List<Objects> objects = repository.findAll(Objects.class); // Replace with your method to fetch objects
-        List<Substances> substances = repository.findAll(Substances.class); // Replace with your method to fetch substances
+        List<Objects> objects = repository.findAll(Objects.class);
+        List<Substances> substances = repository.findAll(Substances.class);
 
-        // Add the lists to the model
         model.addAttribute("objects", objects);
         model.addAttribute("substances", substances);
 
-        return "AboutSubstanceHistory/CreateSubstanceHistory"; // Thymeleaf template
+        return "AboutSubstanceHistory/CreateSubstanceHistory";
     }
 
     @PostMapping("/CreateSubstanceHistory")
     public String createSubstanceHistoryPost(SubstanceHistory substanceHistory,
                                              @RequestParam("objectId") Long objectId,
                                              @RequestParam("substanceId") Long substanceId) {
-        substanceHistory.setObject(repository.findById(Objects.class, objectId)); // Fetch the object
-        substanceHistory.setSubstance(repository.findById(Substances.class, substanceId)); // Fetch the substance
-        repository.create(substanceHistory); // Save the substance history
-        return "redirect:/SubstanceHistory"; // Redirect after saving
+        substanceHistory.setObject(repository.findById(Objects.class, objectId));
+        substanceHistory.setSubstance(repository.findById(Substances.class, substanceId));
+        repository.create(substanceHistory);
+        return "redirect:/SubstanceHistory";
     }
 
     @GetMapping("/FindSubstanceHistory")

@@ -135,7 +135,15 @@ public class Repository<T> implements IRepository<T> {
             CriteriaQuery<T> cq = cb.createQuery(entityClass);
             Root<T> root = cq.from(entityClass);
 
-            cq.where(cb.equal(root.get(searchField), searchValue));
+            Class<?> fieldType = entityClass.getDeclaredField(searchField).getType();
+            if (Enum.class.isAssignableFrom(fieldType)) {
+                Object enumValue = Enum.valueOf((Class<Enum>) fieldType, searchValue);
+                cq.where(cb.equal(root.get(searchField), enumValue));
+            } else if (searchField.equals("substance")) {
+                cq.where(cb.equal(root.get("substance").get("name"), searchValue));
+            } else {
+                cq.where(cb.equal(root.get(searchField), searchValue));
+            }
 
             if (isAsc) {
                 cq.orderBy(cb.asc(root.get(sortField)));
@@ -145,6 +153,11 @@ public class Repository<T> implements IRepository<T> {
 
             entities = session.createQuery(cq).getResultList();
             session.getTransaction().commit();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             if (session.getTransaction() != null) {
@@ -157,5 +170,7 @@ public class Repository<T> implements IRepository<T> {
         }
         return entities;
     }
+
+
 
 }
