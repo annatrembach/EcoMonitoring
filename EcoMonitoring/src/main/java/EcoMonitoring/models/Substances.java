@@ -16,8 +16,9 @@ public class Substances {
     @Column(name = "name")
     public String name;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "type")
-    public int type;
+    private Type type;
 
     @OneToMany(mappedBy = "substance")
     public List<SubstanceHistory> substanceHistories;
@@ -26,7 +27,7 @@ public class Substances {
     public Substances() {
     }
 
-    public Substances(String name, int type) {
+    public Substances(String name, Type type) {
         this.name = name;
         this.type = type;
     }
@@ -47,11 +48,10 @@ public class Substances {
         this.name = name;
     }
 
-    public int getType() {
+    public Type getType() {
         return type;
     }
-    public void setType(int type) {
+    public void setType(Type type) {
         this.type = type;
     }
-
 }
