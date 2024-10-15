@@ -25,13 +25,18 @@ public class Objects {
     @OneToMany(mappedBy = "object")
     public List<SubstanceHistory> substanceHistories;
 
+    @OneToMany(mappedBy = "object")
+    public List<TaxesHistory> taxesHistory;
+
     //Constructors
     public Objects() {
     }
 
-    public Objects(String name, String location) {
+    public Objects(String name, String location, List<SubstanceHistory> substanceHistories, List<TaxesHistory> taxesHistory) {
         this.name = name;
         this.location = location;
+        this.substanceHistories = substanceHistories;
+        this.taxesHistory = taxesHistory;
     }
 
     //Getters and Setters
@@ -56,5 +61,7 @@ public class Objects {
     public void setLocation(String location) {
         this.location = location;
     }
+
+
 
 }

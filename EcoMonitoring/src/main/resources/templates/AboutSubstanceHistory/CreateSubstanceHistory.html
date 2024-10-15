@@ -23,13 +23,13 @@
 
         <div class="mb-3">
             <label for="substanceValue" class="form-label">Substance Value:</label>
-            <input type="number" id="substanceValue" name="substanceValue" class="form-control" placeholder="Substance Value" required>
+            <input pollutionType="number" id="substanceValue" name="substanceValue" class="form-control" placeholder="Substance Value" required>
             <div class="invalid-feedback">Substance Value must be 0 or greater.</div>
         </div>
 
         <div class="mb-3">
             <label for="yearOfObservation" class="form-label">Year of Observation:</label>
-            <input type="number" id="yearOfObservation" name="yearOfObservation" class="form-control" placeholder="Year of Observation" required>
+            <input pollutionType="number" id="yearOfObservation" name="yearOfObservation" class="form-control" placeholder="Year of Observation" required>
             <div class="invalid-feedback">Year cannot be greater than the current year.</div>
         </div>
 
@@ -40,7 +40,7 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button pollutionType="submit" class="btn btn-primary">Save</button>
         <a class="btn btn-secondary" th:href="@{/SubstanceHistory}" role="button">Back to Substance History</a>
     </form>
 </div>

@@ -18,18 +18,23 @@ public class Substances {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "type")
-    private Type type;
+    public PollutionType pollutionType;
 
     @OneToMany(mappedBy = "substance")
     public List<SubstanceHistory> substanceHistories;
+
+    @OneToOne(mappedBy = "substance", fetch = FetchType.LAZY)
+    public Taxes tax;
 
     //Constructors
     public Substances() {
     }
 
-    public Substances(String name, Type type) {
+    public Substances(PollutionType pollutionType, String name, List<SubstanceHistory> substanceHistories, Taxes tax) {
+        this.pollutionType = pollutionType;
         this.name = name;
-        this.type = type;
+        this.substanceHistories = substanceHistories;
+        this.tax = tax;
     }
 
     //Getters and Setters
@@ -48,10 +53,25 @@ public class Substances {
         this.name = name;
     }
 
-    public Type getType() {
-        return type;
+    public PollutionType getType() {
+        return pollutionType;
     }
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(PollutionType pollutionType) {
+        this.pollutionType = pollutionType;
     }
+
+
+    public List<SubstanceHistory> getSubstanceHistories() {
+        return substanceHistories;
+    }
+    public void setSubstanceHistories(List<SubstanceHistory> substanceHistories) {
+        this.substanceHistories = substanceHistories;
+    }
+
+//    public Taxes getTax() {
+//        return tax;
+//    }
+//    public void setTax(Taxes tax) {
+//        this.tax = tax;
+//    }
 }

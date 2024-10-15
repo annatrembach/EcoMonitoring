@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Taxes History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .d-flex {
+            justify-content: flex-end;
+        }
+        .search-container, .sort-container {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Taxes History</h1>
+    <div class="mb-3">
+        <a class="btn btn-primary mb-3" th:href="@{/}"><i class="bi bi-house-fill"></i></a>
+        <a class="btn btn-success mb-3" th:href="@{/CreateTaxesHistory}">Create Tax History</a>
+
+        <div class="d-flex mb-4">
+            <div class="search-container">
+                <h4>Search</h4>
+                <form method="get" th:action="@{/TaxesHistory}" class="mb-3">
+                    <div class="input-group">
+                        <select id="searchField" name="searchField" class="form-select">
+                            <option value="">Select Field</option>
+                            <option value="id">Id</option>
+                            <option value="tax">Tax</option>
+                            <option value="sum">Sum</option>
+                            <option value="yearOfCalculation">Year Of Calculation</option>
+                            <option value="object">Object</option>
+                        </select>
+                        <input type="text" name="searchValue" class="form-control" placeholder="Search Value">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="sort-container">
+                <h4>Sort by</h4>
+                <form method="get" th:action="@{/TaxesHistory}" class="mb-3">
+                    <div class="input-group">
+                        <select id="fieldForSort" name="fieldForSort" class="form-select">
+                            <option value="id">Id</option>
+                            <option value="tax">Tax</option>
+                            <option value="sum">Sum</option>
+                            <option value="yearOfCalculation">Year Of Calculation</option>
+                            <option value="object">Object</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Sort</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tax</th>
+                <th>Sum, USD</th>
+                <th>Year</th>
+                <th>Object</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="taxHistory : ${taxHistories}">
+                <td th:text="${taxHistory.id}"></td>
+                <td th:text="${taxHistory.tax.name}"></td>
+                <td th:text="${taxHistory.sum}"></td>
+                <td th:text="${taxHistory.yearOfCalculation}"></td>
+                <td th:text="${taxHistory.object.name}"></td>
+                <td style="white-space: nowrap;">
+                    <a class="btn btn-primary btn-sm" th:href="@{/UpdateTaxesHistory(id=${taxHistory.id})}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/DeleteTaxesHistory(id=${taxHistory.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

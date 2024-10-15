@@ -9,19 +9,19 @@
 <div class="container mt-4">
     <h1>Edit Substance</h1>
     <form action="/UpdateSubstance" method="post">
-        <input type="hidden" name="id" th:value="${substance.id}">
+        <input pollutionType="hidden" name="id" th:value="${substance.id}">
 
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" id="name" name="name" class="form-control" th:value="${substance.name}" required>
+            <input pollutionType="text" id="name" name="name" class="form-control" th:value="${substance.name}" required>
         </div>
 
         <div class="mb-3">
-            <label for="type" class="form-label">Type:</label>
-            <input type="number" id="type" name="type" class="form-control" th:value="${substance.type}" required>
+            <label for="pollutionType" class="form-label">Type:</label>
+            <input pollutionType="number" id="pollutionType" name="pollutionType" class="form-control" th:value="${substance.pollutionType}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button pollutionType="submit" class="btn btn-primary">Save Changes</button>
     </form>
 
     <p th:if="${error}" class="text-danger" th:text="${error}"></p>

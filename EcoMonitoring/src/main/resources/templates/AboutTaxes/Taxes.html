@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Taxes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Taxes</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/}"><i class="bi bi-house-fill"></i></a>
+    <a class="btn btn-success mb-3" th:href="@{/CreateTax}">Create Tax</a>
+
+    <div class="d-flex justify-content-end mb-4">
+        <div class="me-3">
+            <h4>Search</h4>
+            <form method="get" action="#" th:action="@{/Taxes}">
+                <div class="input-group mb-3">
+                    <select id="searchField" name="searchField" class="form-select">
+                        <option value="" disabled selected>Select field</option>
+                        <option value="id">Id</option>
+                        <option value="rate">Rate</option>
+                        <option value="taxType">Type</option>
+                        <option value="substance">Substance</option>
+                    </select>
+                    <input type="text" name="searchValue" class="form-control" placeholder="Search value">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <h4>Sort by</h4>
+            <form method="get" action="#" th:action="@{/Taxes}">
+                <div class="input-group mb-3">
+                    <select id="fieldForSort" name="fieldForSort" class="form-select">
+                        <option value="id">Id</option>
+                        <option value="rate">Rate</option>
+                        <option value="taxType">Type</option>
+                        <option value="substance">Substance</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Sort</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Rate</th>
+            <th>Type</th>
+            <th>Substance</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tax : ${taxes}">
+            <td th:text="${tax.id}"></td>
+            <td th:text="${tax.rate}"></td>
+            <td th:text="${tax.taxType}"></td>
+            <td th:text="${tax.substance.name}"></td>
+            <td style="white-space: nowrap;">
+                <a class="btn btn-primary btn-sm"
+                   th:href="@{/UpdateTax(id=${tax.id})}">Edit</a>
+                <a class="btn btn-danger btn-sm"
+                   th:href="@{/DeleteTax(id=${tax.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

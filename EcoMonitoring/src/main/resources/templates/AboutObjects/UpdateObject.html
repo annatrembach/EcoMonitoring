@@ -9,19 +9,19 @@
 <div class="container mt-4">
     <h1>Edit Object</h1>
     <form action="/UpdateObject" method="post" class="mt-4">
-        <input type="hidden" name="id" th:value="${object.id}">
+        <input pollutionType="hidden" name="id" th:value="${object.id}">
 
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" id="name" name="name" th:value="${object.name}" class="form-control" required>
+            <input pollutionType="text" id="name" name="name" th:value="${object.name}" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label for="location" class="form-label">Location:</label>
-            <input type="text" id="location" name="location" th:value="${object.location}" class="form-control" required>
+            <input pollutionType="text" id="location" name="location" th:value="${object.location}" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button pollutionType="submit" class="btn btn-primary">Save Changes</button>
     </form>
 
     <div th:if="${error}" class="alert alert-danger mt-3" role="alert">

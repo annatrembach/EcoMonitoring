@@ -1,5 +1,5 @@
 package EcoMonitoring.models;
 
-public enum Type {
+public enum PollutionType {
     Air, Water, Radioactive;
 }

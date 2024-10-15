@@ -18,8 +18,8 @@
         <p><strong>Object Name:</strong> <span th:text="${substanceHistory.object.name}"></span></p>
 
         <form action="/DeleteSubstanceHistory" method="post" class="mt-3">
-            <input type="hidden" name="id" th:value="${substanceHistory.id}">
-            <button type="submit" class="btn btn-danger">Delete Substance History</button>
+            <input pollutionType="hidden" name="id" th:value="${substanceHistory.id}">
+            <button pollutionType="submit" class="btn btn-danger">Delete Substance History</button>
             <a class="btn btn-secondary" th:href="@{/SubstanceHistory}" role="button">Cancel</a>
         </form>
     </div>

@@ -21,10 +21,10 @@
                         <option value="" disabled selected>Select field</option>
                         <option value="id">Id</option>
                         <option value="name">Name</option>
-                        <option value="type">Type</option>
+                        <option value="pollutionType">Type</option>
                     </select>
-                    <input type="text" name="searchValue" class="form-control" placeholder="Search value">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <input pollutionType="text" name="searchValue" class="form-control" placeholder="Search value">
+                    <button pollutionType="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
         </div>
@@ -36,9 +36,9 @@
                     <select id="fieldForSort" name="fieldForSort" class="form-select">
                         <option value="id">Id</option>
                         <option value="name">Name</option>
-                        <option value="type">Type</option>
+                        <option value="pollutionType">Type</option>
                     </select>
-                    <button type="submit" class="btn btn-primary">Sort</button>
+                    <button pollutionType="submit" class="btn btn-primary">Sort</button>
                 </div>
             </form>
         </div>
@@ -57,7 +57,7 @@
         <tr th:each="substance : ${substances}">
             <td th:text="${substance.id}"></td>
             <td th:text="${substance.name}"></td>
-            <td th:text="${substance.type}"></td>
+            <td th:text="${substance.pollutionType}"></td>
             <td style="white-space: nowrap;">
                 <a class="btn btn-primary btn-sm"
                    th:href="@{/UpdateSubstance(id=${substance.id})}">Edit</a>

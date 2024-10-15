@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Taxes History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Edit Taxes History</h1>
+    <form action="/UpdateTaxesHistory" method="post">
+        <input type="hidden" name="id" th:value="${taxesHistory.id}">
+
+        <div class="mb-3">
+            <label for="taxId" class="form-label">Tax ID:</label>
+            <input type="number" id="taxId" name="taxId" th:value="${taxesHistory.tax.id}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="sum" class="form-label">Sum:</label>
+            <input type="text" id="sum" name="sum" th:value="${taxesHistory.sum}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="yearOfCalculation" class="form-label">Year of Calculation:</label>
+            <input type="number" id="yearOfCalculation" name="yearOfCalculation" th:value="${taxesHistory.yearOfCalculation}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="objectId" class="form-label">Object ID:</label>
+            <input type="number" id="objectId" name="objectId" th:value="${taxesHistory.object.id}" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

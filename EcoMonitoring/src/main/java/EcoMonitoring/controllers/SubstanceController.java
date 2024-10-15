@@ -1,8 +1,7 @@
 package EcoMonitoring.controllers;
 
-import EcoMonitoring.models.Objects;
+import EcoMonitoring.models.PollutionType;
 import EcoMonitoring.models.Substances;
-import EcoMonitoring.models.Type;
 import EcoMonitoring.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class SubstanceController {
 
     @GetMapping("/CreateSubstance")
     public String createSubstance(Model model) {
-        model.addAttribute("types", Type.values());
+        model.addAttribute("types", PollutionType.values());
         return "AboutSubstances/CreateSubstance";
     }
 
@@ -77,12 +76,12 @@ public class SubstanceController {
     @PostMapping("/UpdateSubstance")
     public String UpdateSubstancePost(@RequestParam("id") Long id,
                                       @RequestParam("name") String name,
-                                      @RequestParam("type") Type type,
+                                      @RequestParam("type") PollutionType pollutionType,
                                       Model model) {
         Substances substance = repository.findById(Substances.class, id);
         if (substance != null) {
             substance.setName(name);
-            substance.setType(type);
+            substance.setType(pollutionType);
 
             repository.update(substance);
             model.addAttribute("success", "Substance updated successfully.");
