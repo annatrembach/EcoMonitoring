@@ -26,10 +26,10 @@ public class TaxesController {
                             @RequestParam(name = "searchValue", required = false) String searchValue) {
         if (searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty()) {
             List<Taxes> taxes = repository.findByFieldAndSorting(Taxes.class, searchField, searchValue, fieldForSort, true);
-            model.addAttribute("taxesHistory", taxes);
+            model.addAttribute("taxes", taxes);
         } else {
             List<Taxes> taxes = repository.findWithSorting(Taxes.class, fieldForSort, true);
-            model.addAttribute("taxesHistory", taxes);
+            model.addAttribute("taxes", taxes);
         }
         return "AboutTaxes/Taxes";
     }
@@ -42,13 +42,13 @@ public class TaxesController {
         return "AboutTaxes/CreateTax";
     }
 
-//    @PostMapping("/CreateTax")
-//    public String createTaxPost(Taxes tax,
-//                                @RequestParam("substanceId") Long substanceId) {
-//        tax.setSubstance(repository.findById(Substances.class, substanceId));
-//        repository.create(tax);
-//        return "redirect:/Taxes";
-//    }
+    @PostMapping("/CreateTax")
+    public String createTaxPost(Taxes tax,
+                                @RequestParam("substanceId") Long substanceId) {
+        tax.setSubstance(repository.findById(Substances.class, substanceId));
+        repository.create(tax);
+        return "redirect:/Taxes";
+    }
 
     @GetMapping("/FindTax")
     public String findTax() {
@@ -79,24 +79,24 @@ public class TaxesController {
         return "AboutTaxes/UpdateTax";
     }
 
-//    @PostMapping("/UpdateTax")
-//    public String updateTaxPost(@RequestParam("id") Long id,
-//                                @RequestParam("rate") double rate,
-//                                @RequestParam("taxType") TaxType taxType,
-//                                @RequestParam("substanceId") Long substanceId,
-//                                Model model) {
-//        Taxes tax = repository.findById(Taxes.class, id);
-//        if (tax != null) {
-//            tax.setRate(rate);
-//            tax.setTaxType(taxType);
-//            tax.setSubstance(repository.findById(Substances.class, substanceId));
-//            repository.update(tax);
-//            model.addAttribute("success", "Tax updated successfully.");
-//        } else {
-//            model.addAttribute("error", "Tax not found for updating.");
-//        }
-//        return "redirect:/Taxes";
-//    }
+    @PostMapping("/UpdateTax")
+    public String updateTaxPost(@RequestParam("id") Long id,
+                                @RequestParam("rate") double rate,
+                                @RequestParam("taxType") TaxType taxType,
+                                @RequestParam("substanceId") Long substanceId,
+                                Model model) {
+        Taxes tax = repository.findById(Taxes.class, id);
+        if (tax != null) {
+            tax.setRate(rate);
+            tax.setTaxType(taxType);
+            tax.setSubstance(repository.findById(Substances.class, substanceId));
+            repository.update(tax);
+            model.addAttribute("success", "Tax updated successfully.");
+        } else {
+            model.addAttribute("error", "Tax not found for updating.");
+        }
+        return "redirect:/Taxes";
+    }
 
     @GetMapping("/DeleteTax")
     public String deleteTax(Long id, Model model) {

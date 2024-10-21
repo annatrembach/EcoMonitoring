@@ -9,26 +9,30 @@
 <div class="container mt-4">
     <h1>Edit Taxes History</h1>
     <form action="/UpdateTaxesHistory" method="post">
-        <input type="hidden" name="id" th:value="${taxesHistory.id}">
+        <input type="hidden" name="id" th:value="${taxesHistories.id}">
 
         <div class="mb-3">
-            <label for="taxId" class="form-label">Tax ID:</label>
-            <input type="number" id="taxId" name="taxId" th:value="${taxesHistory.tax.id}" class="form-control" required>
+            <label for="taxId" class="form-label">Tax:</label>
+            <select id="taxId" name="taxId" class="form-control" required>
+                <option th:each="tax : ${taxes}" th:value="${tax.id}" th:text="${tax.taxType}"></option>
+            </select>
         </div>
 
         <div class="mb-3">
             <label for="sum" class="form-label">Sum:</label>
-            <input type="text" id="sum" name="sum" th:value="${taxesHistory.sum}" class="form-control" required>
+            <input type="text" id="sum" name="sum" th:value="${taxesHistories.sum}" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="yearOfCalculation" class="form-label">Year of Calculation:</label>
-            <input type="number" id="yearOfCalculation" name="yearOfCalculation" th:value="${taxesHistory.yearOfCalculation}" class="form-control" required>
+            <label for="yearOfCalculation" class="form-label">Year:</label>
+            <input type="number" id="yearOfCalculation" name="yearOfCalculation" th:value="${taxesHistories.yearOfCalculation}" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="objectId" class="form-label">Object ID:</label>
-            <input type="number" id="objectId" name="objectId" th:value="${taxesHistory.object.id}" class="form-control" required>
+            <label for="objectId" class="form-label">Object:</label>
+            <select id="objectId" name="objectId" class="form-control" required>
+                <option th:each="object : ${objects}" th:value="${object.id}" th:text="${object.name}">Object Name</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Save Changes</button>

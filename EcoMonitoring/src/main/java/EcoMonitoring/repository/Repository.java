@@ -7,7 +7,6 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -93,6 +92,7 @@ public class Repository<T> implements IRepository<T> {
         }
     }
 
+    @Override
     public <T> List<T> findWithSorting(Class<T> entityClass, String nameOfField, boolean isAsc) {
         Session session = Util.getSessionFactory().openSession();
         List<T> entities = null;
@@ -125,6 +125,7 @@ public class Repository<T> implements IRepository<T> {
         return entities;
     }
 
+    @Override
     public <T> List<T> findByFieldAndSorting(Class<T> entityClass, String searchField, String searchValue, String sortField, boolean isAsc) {
         Session session = Util.getSessionFactory().openSession();
         List<T> entities = null;
@@ -158,6 +159,35 @@ public class Repository<T> implements IRepository<T> {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return entities;
+    }
+
+    @Override
+    public <T> List<T> findByField(Class<T> entityClass, String fieldName, Object fieldValue) {
+        Session session = Util.getSessionFactory().openSession();
+        List<T> entities = null;
+        try {
+            session.beginTransaction();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(entityClass);
+            Root<T> root = cq.from(entityClass);
+
+            cq.where(cb.equal(root.get(fieldName), fieldValue));
+
+            entities = session.createQuery(cq).getResultList();
+
+            session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
             if (session.getTransaction() != null) {

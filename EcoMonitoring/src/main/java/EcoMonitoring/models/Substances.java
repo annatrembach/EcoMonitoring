@@ -20,10 +20,10 @@ public class Substances {
     @Column(name = "type")
     public PollutionType pollutionType;
 
-    @OneToMany(mappedBy = "substance")
+    @OneToMany(mappedBy = "substance", fetch = FetchType.EAGER)
     public List<SubstanceHistory> substanceHistories;
 
-    @OneToOne(mappedBy = "substance", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "substance", fetch = FetchType.EAGER)
     public Taxes tax;
 
     //Constructors
@@ -68,10 +68,10 @@ public class Substances {
         this.substanceHistories = substanceHistories;
     }
 
-//    public Taxes getTax() {
-//        return tax;
-//    }
-//    public void setTax(Taxes tax) {
-//        this.tax = tax;
-//    }
+    public Taxes getTax() {
+        return tax;
+    }
+    public void setTax(Taxes tax) {
+        this.tax = tax;
+    }
 }

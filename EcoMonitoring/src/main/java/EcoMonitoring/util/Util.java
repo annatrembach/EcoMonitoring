@@ -1,10 +1,6 @@
 package EcoMonitoring.util;
 
-import EcoMonitoring.models.Objects;
-import EcoMonitoring.models.SubstanceHistory;
-import EcoMonitoring.models.Substances;
-import EcoMonitoring.models.TaxesHistory;
-import EcoMonitoring.models.Taxes;
+import EcoMonitoring.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

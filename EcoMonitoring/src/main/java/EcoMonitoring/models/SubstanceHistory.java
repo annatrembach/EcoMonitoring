@@ -23,7 +23,7 @@ public class SubstanceHistory {
     @JoinColumn(name = "objectId")
     public Objects object;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "substanceId")
     public Substances substance;
 

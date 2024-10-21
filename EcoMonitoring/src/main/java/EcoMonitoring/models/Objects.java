@@ -25,18 +25,18 @@ public class Objects {
     @OneToMany(mappedBy = "object")
     public List<SubstanceHistory> substanceHistories;
 
-    @OneToMany(mappedBy = "object")
-    public List<TaxesHistory> taxesHistory;
+    @OneToMany(mappedBy = "object", fetch = FetchType.EAGER)
+    public List<TaxesHistory> taxesHistories;
 
     //Constructors
     public Objects() {
     }
 
-    public Objects(String name, String location, List<SubstanceHistory> substanceHistories, List<TaxesHistory> taxesHistory) {
+    public Objects(String name, String location, List<SubstanceHistory> substanceHistories, List<TaxesHistory> taxesHistories) {
         this.name = name;
         this.location = location;
         this.substanceHistories = substanceHistories;
-        this.taxesHistory = taxesHistory;
+        this.taxesHistories = taxesHistories;
     }
 
     //Getters and Setters
@@ -62,6 +62,17 @@ public class Objects {
         this.location = location;
     }
 
+    public List<SubstanceHistory> getSubstanceHistories() {
+        return substanceHistories;
+    }
+    public void setSubstanceHistories(List<SubstanceHistory> substanceHistories) {
+        this.substanceHistories = substanceHistories;
+    }
 
-
+    public List<TaxesHistory> getTaxesHistories() {
+        return taxesHistories;
+    }
+    public void setTaxesHistories(List<TaxesHistory> taxesHistories) {
+        this.taxesHistories = taxesHistories;
+    }
 }

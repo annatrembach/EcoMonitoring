@@ -17,4 +17,6 @@ public interface IRepository<T> {
     <T> List<T> findWithSorting(Class<T> entityClass, String nameOfField, boolean isAsc);
 
     <T> List<T> findByFieldAndSorting(Class<T> entityClass, String searchField, String searchValue, String sortField, boolean isAsc);
+
+    <T> List<T> findByField(Class<T> entityClass, String fieldName, Object fieldValue);
 }
