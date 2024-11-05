@@ -19,4 +19,7 @@ public interface IRepository<T> {
     <T> List<T> findByFieldAndSorting(Class<T> entityClass, String searchField, String searchValue, String sortField, boolean isAsc);
 
     <T> List<T> findByField(Class<T> entityClass, String fieldName, Object fieldValue);
+
+    <T> List<T> findByYearAndObject(Class<T> entityClass, String yearField, String year, String objectField, Object objectId);
+
 }

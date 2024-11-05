@@ -23,6 +23,9 @@ public class Substances {
     @OneToMany(mappedBy = "substance", fetch = FetchType.EAGER)
     public List<SubstanceHistory> substanceHistories;
 
+    @OneToMany(mappedBy = "substance", fetch = FetchType.EAGER)
+    public List<HealthRisk> healthRisks;
+
     @OneToOne(mappedBy = "substance", fetch = FetchType.EAGER)
     public Taxes tax;
 

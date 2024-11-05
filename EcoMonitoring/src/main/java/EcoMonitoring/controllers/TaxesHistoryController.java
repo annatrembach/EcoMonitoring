@@ -20,10 +20,7 @@ import java.util.Map;
 public class TaxesHistoryController {
 
     @Autowired
-    Repository<TaxesHistory> taxesHistoryRepository;
-
-    @Autowired
-    Repository<Objects> objectsRepository;
+    Repository<TaxesHistory> repository;
 
     @Autowired
     public TaxService taxService;
@@ -35,42 +32,41 @@ public class TaxesHistoryController {
                                    @RequestParam(name = "searchValue", required = false) String searchValue,
                                    @RequestParam(name = "objectId", required = false) Long objectId) {
         if (searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty()) {
-            List<TaxesHistory> taxesHistories = taxesHistoryRepository.findByFieldAndSorting(TaxesHistory.class, searchField, searchValue, fieldForSort, true);
+            List<TaxesHistory> taxesHistories = repository.findByFieldAndSorting(TaxesHistory.class, searchField, searchValue, fieldForSort, true);
             model.addAttribute("taxesHistories", taxesHistories);
         } else {
-            List<TaxesHistory> taxesHistories = taxesHistoryRepository.findWithSorting(TaxesHistory.class, fieldForSort, true);
+            List<TaxesHistory> taxesHistories = repository.findWithSorting(TaxesHistory.class, fieldForSort, true);
             model.addAttribute("taxesHistories", taxesHistories);
         }
 
 
         List<TaxSummaryEntry> taxSummary = new ArrayList<>();
-        List<Objects> objects = objectsRepository.findAll(Objects.class);
-            for(Objects object : objects){
+        List<Objects> objects = repository.findAll(Objects.class);
+        for (Objects object : objects) {
 
-                    List<TaxesHistory> taxesHistories = object.getTaxesHistories();
-                    Map<String, Double> summaryMap = new HashMap<>();
-                    for (TaxesHistory taxeshistory : taxesHistories) {
-                        summaryMap.merge(taxeshistory.getYearOfCalculation(), taxeshistory.getSum(), Double::sum);
-                    }
-                    for (Map.Entry<String, Double> entry : summaryMap.entrySet()) {
-                        TaxSummaryEntry taxSummaryEntry = new TaxSummaryEntry();
-                        taxSummaryEntry.year = entry.getKey();
-                        taxSummaryEntry.sum = entry.getValue();
-                        taxSummaryEntry.object = object;
-                        taxSummary.add(taxSummaryEntry);
-                    }
-                    model.addAttribute("taxSummary", taxSummary);
+            List<TaxesHistory> taxesHistories = object.getTaxesHistories();
+            Map<String, Double> summaryMap = new HashMap<>();
+            for (TaxesHistory taxeshistory : taxesHistories) {
+                summaryMap.merge(taxeshistory.getYearOfCalculation(), taxeshistory.getSum(), Double::sum);
             }
+            for (Map.Entry<String, Double> entry : summaryMap.entrySet()) {
+                TaxSummaryEntry taxSummaryEntry = new TaxSummaryEntry();
+                taxSummaryEntry.year = entry.getKey();
+                taxSummaryEntry.sum = entry.getValue();
+                taxSummaryEntry.object = object;
+                taxSummary.add(taxSummaryEntry);
+            }
+            model.addAttribute("taxSummary", taxSummary);
+        }
+
         return "AboutTaxesHistory/TaxesHistory";
     }
 
 
-
-
     @GetMapping("/CreateTaxesHistory")
     public String createTaxesHistory(Model model) {
-        List<Objects> objects = taxesHistoryRepository.findAll(Objects.class);
-        List<Taxes> taxes = taxesHistoryRepository.findAll(Taxes.class);
+        List<Objects> objects = repository.findAll(Objects.class);
+        List<Taxes> taxes = repository.findAll(Taxes.class);
 
         model.addAttribute("objects", objects);
         model.addAttribute("taxes", taxes);
@@ -78,7 +74,6 @@ public class TaxesHistoryController {
         return "AboutTaxesHistory/CreateTaxesHistory";
     }
 
-    //@Transactional
     @PostMapping("/CreateTaxesHistory")
     public String createTaxesHistoryPost(
             @RequestParam("objectId") Long objectId,
@@ -97,14 +92,12 @@ public class TaxesHistoryController {
             @RequestParam(required = false) Double T
     ) {
 
-        Objects object = taxesHistoryRepository.findById(Objects.class, objectId);
-        Taxes tax = taxesHistoryRepository.findById(Taxes.class, taxId);
+        Objects object = repository.findById(Objects.class, objectId);
+        Taxes tax = repository.findById(Taxes.class, taxId);
         double taxRate = tax.getRate();
-        Substances substance = tax.getSubstance();
-        List<SubstanceHistory> substanceHistories = substance.getSubstanceHistories();
+        List<SubstanceHistory> filteredSubstanceHistories = repository.findByYearAndObject(SubstanceHistory.class, "yearOfCalculation", year, "object", objectId);
 
-        double substanceValue = substanceHistories.stream()
-                .filter(sh -> sh.getYearOfObservation().equals(year))
+        double substanceValue = filteredSubstanceHistories.stream()
                 .mapToDouble(SubstanceHistory::getSubstanceValue)
                 .sum();
 
@@ -118,7 +111,7 @@ public class TaxesHistoryController {
         };
 
         TaxesHistory taxesHistory = new TaxesHistory(year, sum, object, tax);
-        taxesHistoryRepository.create(taxesHistory);
+        repository.create(taxesHistory);
         return "redirect:/TaxesHistory";
     }
 
@@ -130,7 +123,7 @@ public class TaxesHistoryController {
 
     @PostMapping("/FindTaxesHistory")
     public String findTaxesHistoryPost(@RequestParam("id") Long id, Model model) {
-        TaxesHistory taxesHistory = taxesHistoryRepository.findById(TaxesHistory.class, id);
+        TaxesHistory taxesHistory = repository.findById(TaxesHistory.class, id);
         if (taxesHistory != null) {
             model.addAttribute("taxesHistories", taxesHistory);
         } else {
@@ -141,12 +134,11 @@ public class TaxesHistoryController {
 
     @GetMapping("/UpdateTaxesHistory")
     public String updateTaxesHistory(@RequestParam("id") Long id, Model model) {
-        TaxesHistory taxesHistory = taxesHistoryRepository.findById(TaxesHistory.class, id);
+        TaxesHistory taxesHistory = repository.findById(TaxesHistory.class, id);
         if (taxesHistory != null) {
             model.addAttribute("taxesHistories", taxesHistory);
-            model.addAttribute("objects", taxesHistoryRepository.findAll(Objects.class));
-            model.addAttribute("taxes", taxesHistoryRepository.findAll(Taxes.class));
-
+            model.addAttribute("objects", repository.findAll(Objects.class));
+            model.addAttribute("taxes", repository.findAll(Taxes.class));
             model.addAttribute("taxTypes", TaxType.values());
         } else {
             model.addAttribute("error", "TaxesHistory not found.");
@@ -163,14 +155,14 @@ public class TaxesHistoryController {
                                          @RequestParam("objectId") Long objectId,
                                          @RequestParam("taxId") Long taxId,
                                          Model model) {
-        TaxesHistory taxesHistory = taxesHistoryRepository.findById(TaxesHistory.class, id);
+        TaxesHistory taxesHistory = repository.findById(TaxesHistory.class, id);
         if (taxesHistory != null) {
             taxesHistory.setSum(sum);
             taxesHistory.setYearOfCalculation(yearOfCalculation);
-            taxesHistory.setObject(taxesHistoryRepository.findById(Objects.class, objectId));
-            taxesHistory.setTax(taxesHistoryRepository.findById(Taxes.class, taxId));
+            taxesHistory.setObject(repository.findById(Objects.class, objectId));
+            taxesHistory.setTax(repository.findById(Taxes.class, taxId));
 
-            taxesHistoryRepository.update(taxesHistory);
+            repository.update(taxesHistory);
             model.addAttribute("success", "TaxesHistory updated successfully.");
         } else {
             model.addAttribute("error", "TaxesHistory not found for updating.");
@@ -181,7 +173,7 @@ public class TaxesHistoryController {
 
     @GetMapping("/DeleteTaxesHistory")
     public String deleteTaxesHistory(@RequestParam("id") Long id, Model model) {
-        TaxesHistory taxesHistory = taxesHistoryRepository.findById(TaxesHistory.class, id);
+        TaxesHistory taxesHistory = repository.findById(TaxesHistory.class, id);
         if (taxesHistory != null) {
             model.addAttribute("taxesHistories", taxesHistory);
         } else {
@@ -192,37 +184,8 @@ public class TaxesHistoryController {
 
     @PostMapping("/DeleteTaxesHistory")
     public String deleteTaxesHistoryPost(TaxesHistory taxesHistory) {
-        taxesHistoryRepository.delete(taxesHistory);
+        repository.delete(taxesHistory);
         return "redirect:/TaxesHistory";
     }
 
-//    @GetMapping("/ObjectTaxSummary")
-//    public String objectTaxSummary(Model model,
-//                                   @RequestParam(name = "fieldForSort", required = false, defaultValue = "id") String fieldForSort,
-//                                   @RequestParam(name = "searchField", required = false) String searchField,
-//                                   @RequestParam(name = "searchValue", required = false) String searchValue) {
-//        List<Objects> objects = taxesHistoryRepository.findAll(Objects.class);
-//        model.addAttribute("objects", objects);
-//        if (searchField != null && searchValue != null && !searchField.isEmpty() && !searchValue.isEmpty()) {
-//            List<YearTaxSummary> yearTaxSummaryList = taxesHistoryRepository.findByFieldAndSorting(YearTaxSummary.class, searchField, searchValue, fieldForSort, true);
-//            model.addAttribute("yearTaxSummaryList", yearTaxSummaryList);
-//        } else {
-//            List<YearTaxSummary> yearTaxSummaryList = taxesHistoryRepository.findWithSorting(YearTaxSummary.class, fieldForSort, true);
-//            model.addAttribute("yearTaxSummaryList", yearTaxSummaryList);
-//        }
-//        return "AboutTaxesHistory/ObjectTaxSummary";
-//    }
-//
-//    @PostMapping("/ObjectTaxSummary")
-//    public String objectTaxSummaryPost(@RequestParam("objectId") Long objectId, Model model) {
-//        Objects object = taxesHistoryRepository.findById(Objects.class, objectId);
-//        List<Objects> objects = taxesHistoryRepository.findAll(Objects.class);
-//
-//        List<YearTaxSummary> taxSummaryList = taxService.getTaxSummaryByObject(object);
-//        model.addAttribute("taxSummaryList", taxSummaryList);
-//        model.addAttribute("object", object);
-//        model.addAttribute("objects", objects);
-//
-//        return "ObjectTaxSummary";
-//    }
 }

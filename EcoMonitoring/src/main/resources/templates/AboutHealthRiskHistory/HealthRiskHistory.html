@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Risk History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .d-flex { justify-content: flex-end; }
+        .search-container, .sort-container { margin-left: 20px; }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Health Risk History</h1>
+    <div class="mb-3">
+        <a class="btn btn-primary mb-3" th:href="@{/}"><i class="bi bi-house-fill"></i></a>
+        <a class="btn btn-success mb-3" th:href="@{/CreateHealthRiskHistory}">Create Health Risk History</a>
+    </div>
+
+    <div class="d-flex mb-4">
+        <div class="search-container">
+            <h4>Search</h4>
+            <form method="get" action="#" th:action="@{/HealthRiskHistory}" class="mb-3">
+                <div class="input-group">
+                    <select id="searchField" name="searchField" class="form-select">
+                        <option value="" disabled selected>Select field</option>
+                        <option value="id">Id</option>
+                        <option value="yearOfObservation">Year of Observation</option>
+                        <option value="object">Object</option>
+                        <option value="riskLevel">Risk Level</option>
+                    </select>
+                    <input type="text" name="searchValue" class="form-control" placeholder="Search Value">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="sort-container">
+            <h4>Sort by</h4>
+            <form method="get" th:action="@{/HealthRiskHistory}" class="mb-3">
+                <div class="input-group">
+                    <select id="fieldForSort" name="fieldForSort" class="form-select">
+                        <option value="Id">Id</option>
+                        <option value="yearOfObservation">Year of Observation</option>
+                        <option value="object">Object</option>
+                        <option value="riskLevel">Risk Level</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Sort</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Substance</th>
+            <th>Agent Type</th>
+            <th>Year of Observation</th>
+            <th>Object</th>
+            <th>Risk Level</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="history : ${histories}">
+            <td th:text="${history.id}"></td>
+            <td th:text="${history.healthRisk.substance.name}"></td>
+            <td th:text="${history.healthRisk.agentType}"></td>
+            <td th:text="${history.yearOfObservation}"></td>
+            <td th:text="${history.object.name}"></td>
+            <td class="risk-level" th:text="${history.riskLevel}"></td>
+            <td style="white-space: nowrap;">
+                <a class="btn btn-primary btn-sm" th:href="@{/UpdateHealthRiskHistory(id=${history.id})}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="@{/DeleteHealthRiskHistory(id=${history.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const riskLevelCells = document.querySelectorAll('.risk-level');
+
+        riskLevelCells.forEach(cell => {
+            const riskLevel = cell.textContent.trim().toLowerCase();
+            if (riskLevel === 'minimum') {
+                cell.style.backgroundColor = '#99ff99';
+            } else if (riskLevel === 'low') {
+                cell.style.backgroundColor = '#ffff99';
+            } else if (riskLevel === 'average') {
+                cell.style.backgroundColor = '#ffcc99';
+            } else if (riskLevel === 'high') {
+                cell.style.backgroundColor = '#ff9999';
+            }
+        });
+    });
+</script>
+</body>
+</html>

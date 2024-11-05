@@ -11,19 +11,19 @@
     <form class="form" th:action="@{/CreateSubstance}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input pollutionType="text" id="name" name="name" class="form-control" placeholder="Enter substance name" required>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter substance name" required>
         </div>
 
         <div class="mb-3">
             <label for="pollutionType" class="form-label">Type:</label>
             <select id="pollutionType" name="pollutionType" class="form-control" required>
-                <option value="" disabled selected>Select substance pollutionType</option>
-                <option th:each="pollutionType : ${T(EcoMonitoring.models.Type).values()}"
+                <option value="" disabled selected>Select substance type</option>
+                <option th:each="pollutionType : ${T(EcoMonitoring.models.PollutionType).values()}"
                         th:value="${pollutionType}" th:text="${pollutionType}"></option>
             </select>
         </div>
 
-        <button pollutionType="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
         <a class="btn btn-secondary" th:href="@{/Substances}" role="button">Back to Substances</a>
     </form>
 </div>

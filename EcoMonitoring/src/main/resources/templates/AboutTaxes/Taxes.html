@@ -21,7 +21,7 @@
                         <option value="" disabled selected>Select field</option>
                         <option value="id">Id</option>
                         <option value="rate">Rate</option>
-                        <option value="taxType">Type</option>
+                        <option value="taxType">Tax type</option>
                         <option value="substance">Substance</option>
                     </select>
                     <input type="text" name="searchValue" class="form-control" placeholder="Search value">
@@ -37,7 +37,7 @@
                     <select id="fieldForSort" name="fieldForSort" class="form-select">
                         <option value="id">Id</option>
                         <option value="rate">Rate</option>
-                        <option value="taxType">Type</option>
+                        <option value="taxType">Tax type</option>
                         <option value="substance">Substance</option>
                     </select>
                     <button type="submit" class="btn btn-primary">Sort</button>
@@ -50,18 +50,18 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Rate</th>
-            <th>Type</th>
             <th>Substance</th>
+            <th>Rate</th>
+            <th>Tax type</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="tax : ${taxes}">
             <td th:text="${tax.id}"></td>
+            <td th:text="${tax.substance.name}"></td>
             <td th:text="${tax.rate}"></td>
             <td th:text="${tax.taxType}"></td>
-            <td th:text="${tax.substance.name}"></td>
             <td style="white-space: nowrap;">
                 <a class="btn btn-primary btn-sm"
                    th:href="@{/UpdateTax(id=${tax.id})}">Edit</a>

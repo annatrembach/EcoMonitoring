@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Risk Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .optional-field {
+            display: none;
+        }
+        .text-danger {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Health Risk Assessment</h1>
+    <form id="healthRiskForm" th:action="@{/CreateHealthRisk}" method="post" class="mt-4" onsubmit="return validateForm()">
+
+        <div class="mb-3">
+            <label for="agentType" class="form-label">Agent Type:</label>
+            <select id="agentType" name="agentType" class="form-control" required>
+                <option value="" disabled selected>Select agent type</option>
+                <option th:each="type : ${agentTypes}" th:value="${type.name()}" th:text="${type.name()}"></option>
+            </select>
+        </div>
+
+        <div id="parameterField" class="mb-3 optional-field">
+            <label id="parameterLabel" for="parameter" class="form-label"></label>
+            <input type="number" id="parameter" name="parameter" class="form-control" placeholder="Enter value">
+            <div id="warning-message" class="text-danger mt-2">Warning: The value cannot be less than 0.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="substance" class="form-label">Substance:</label>
+            <select id="substance" name="substanceId" class="form-control" required>
+                <option value="" disabled selected>Select substance</option>
+                <option th:each="substance : ${substances}" th:value="${substance.id}" th:text="${substance.name}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('agentType').addEventListener('change', function() {
+        const selectedType = this.value;
+        const parameterField = document.getElementById('parameterField');
+        const parameterLabel = document.getElementById('parameterLabel');
+
+        if (selectedType === 'NonCarcinogenic') {
+            parameterLabel.textContent = 'Safe Exposure Level:';
+            parameterField.style.display = 'block';
+        } else if (selectedType === 'Carcinogenic') {
+            parameterLabel.textContent = 'Compound Potential:';
+            parameterField.style.display = 'block';
+        } else {
+            parameterField.style.display = 'none';
+        }
+    });
+
+    function validateForm() {
+        const parameterInput = document.getElementById('parameter');
+        const warningMessage = document.getElementById('warning-message');
+
+        if (parameterInput.value !== '' && parseFloat(parameterInput.value) < 0) {
+            warningMessage.style.display = 'block';
+            return false;
+        } else {
+            warningMessage.style.display = 'none';
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

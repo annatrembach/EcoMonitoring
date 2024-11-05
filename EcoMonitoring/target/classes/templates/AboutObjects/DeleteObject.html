@@ -16,8 +16,8 @@
         <p><strong>Location:</strong> <span th:text="${object.location}"></span></p>
 
         <form action="/DeleteObject" method="post">
-            <input pollutionType="hidden" name="id" th:value="${object.id}">
-            <button pollutionType="submit" class="btn btn-danger">Delete Object</button>
+            <input type="hidden" name="id" th:value="${object.id}">
+            <button type="submit" class="btn btn-danger">Delete Object</button>
             <a class="btn btn-secondary" th:href="@{/Objects}" role="button">Cancel</a>
         </form>
     </div>

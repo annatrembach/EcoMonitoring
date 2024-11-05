@@ -11,9 +11,6 @@ import java.util.*;
 @Service
 public class TaxService {
 
-    @Autowired
-    public Repository repository;
-
     public double airTax(double substanceValue, double taxRate) {
         double result = 0;
             result = substanceValue * taxRate;

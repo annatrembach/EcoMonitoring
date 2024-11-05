@@ -1,4 +1,5 @@
 package EcoMonitoring.models;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,10 +23,13 @@ public class Objects {
     @Column(name = "location")
     public String location;
 
-    @OneToMany(mappedBy = "object")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "object")
     public List<SubstanceHistory> substanceHistories;
 
-    @OneToMany(mappedBy = "object", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "object")
+    public List<HealthRiskHistory> healthRiskHistories;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "object")
     public List<TaxesHistory> taxesHistories;
 
     //Constructors

@@ -11,13 +11,13 @@
     <form class="form" th:action="@{/CreateObject}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input pollutionType="text" id="name" name="name" class="form-control" placeholder="Enter object name" required>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter object name" required>
         </div>
         <div class="mb-3">
             <label for="location" class="form-label">Location</label>
-            <input pollutionType="text" id="location" name="location" class="form-control" placeholder="Enter object location" required>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Enter object location" required>
         </div>
-        <button pollutionType="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
         <a class="btn btn-secondary" th:href="@{/Objects}" role="button">Back to Objects</a>
     </form>
 </div>

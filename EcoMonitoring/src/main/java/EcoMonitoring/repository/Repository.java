@@ -201,6 +201,35 @@ public class Repository<T> implements IRepository<T> {
         return entities;
     }
 
+    public <T> List<T> findByYearAndObject(Class<T> entityClass, String yearField, String year, String objectField, Object objectId) {
+        Session session = Util.getSessionFactory().openSession();
+        List<T> entities = null;
+        try {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(entityClass);
+            Root<T> root = cq.from(entityClass);
+
+            cq.where(cb.and(
+                    cb.equal(root.get(yearField), year),
+                    cb.equal(root.get(objectField).get("id"), objectId)
+            ));
+
+            entities = session.createQuery(cq).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return entities;
+    }
+
 
 
 }

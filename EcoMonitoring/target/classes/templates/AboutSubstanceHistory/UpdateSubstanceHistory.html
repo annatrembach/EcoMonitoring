@@ -9,29 +9,29 @@
 <div class="container mt-4">
     <h1>Edit Substance History</h1>
     <form action="/UpdateSubstanceHistory" method="post">
-        <input pollutionType="hidden" name="id" th:value="${substanceHistory.id}">
+        <input type="hidden" name="id" th:value="${substanceHistory.id}">
 
         <div class="mb-3">
-            <label for="substanceId" class="form-label">Substance ID:</label>
-            <input pollutionType="number" id="substanceId" name="substanceId" th:value="${substanceHistory.substance.id}" class="form-control" required>
+            <label for="substanceName" class="form-label">Substance :</label>
+            <input pollutionType="text" id="substanceName" name="substanceName" th:value="${substanceHistory.substance.name}" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label for="substanceValue" class="form-label">Substance Value:</label>
-            <input pollutionType="text" id="substanceValue" name="substanceValue" th:value="${substanceHistory.substanceValue}" class="form-control" required>
+            <input type="text" id="substanceValue" name="substanceValue" th:value="${substanceHistory.substanceValue}" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label for="yearOfObservation" class="form-label">Year of Observation:</label>
-            <input pollutionType="number" id="yearOfObservation" name="yearOfObservation" th:value="${substanceHistory.yearOfObservation}" class="form-control" required>
+            <input type="number" id="yearOfObservation" name="yearOfObservation" th:value="${substanceHistory.yearOfObservation}" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label for="objectId" class="form-label">Object ID:</label>
-            <input pollutionType="number" id="objectId" name="objectId" th:value="${substanceHistory.object.id}" class="form-control" required>
+            <input type="number" id="objectId" name="objectId" th:value="${substanceHistory.object.id}" class="form-control" required>
         </div>
 
-        <button pollutionType="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 
     <p th:if="${error}" th:text="${error}" class="text-danger"></p>

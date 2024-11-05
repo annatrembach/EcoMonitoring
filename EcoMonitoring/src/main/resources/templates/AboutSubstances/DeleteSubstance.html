@@ -16,8 +16,8 @@
         <p><strong>Type:</strong> <span th:text="${substance.pollutionType}"></span></p>
 
         <form action="/DeleteSubstance" method="post" class="mt-3">
-            <input pollutionType="hidden" name="id" th:value="${substance.id}">
-            <button pollutionType="submit" class="btn btn-danger">Delete Substance</button>
+            <input type="hidden" name="id" th:value="${substance.id}">
+            <button type="submit" class="btn btn-danger">Delete Substance</button>
             <a class="btn btn-secondary" th:href="@{/Substances}" role="button">Cancel</a>
         </form>
     </div>
