@@ -60,6 +60,7 @@
             <th>Agent Type</th>
             <th>Year of Observation</th>
             <th>Object</th>
+            <th>Number</th>
             <th>Risk Level</th>
             <th>Actions</th>
         </tr>
@@ -71,6 +72,7 @@
             <td th:text="${history.healthRisk.agentType}"></td>
             <td th:text="${history.yearOfObservation}"></td>
             <td th:text="${history.object.name}"></td>
+            <td th:text="${history.resultRiskNumber}"></td>
             <td class="risk-level" th:text="${history.riskLevel}"></td>
             <td style="white-space: nowrap;">
                 <a class="btn btn-primary btn-sm" th:href="@{/UpdateHealthRiskHistory(id=${history.id})}">Edit</a>

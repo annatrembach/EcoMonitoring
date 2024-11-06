@@ -13,8 +13,8 @@ public class HealthRiskHistory {
     @Column(name = "yearOfObservation")
     public String yearOfObservation;
 
-    @Column(name = "amountOfSubstance")
-    public double amountOfSubstance;
+    @Column(name = "resultRiskNumber")
+    public double resultRiskNumber;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "riskLevel")
@@ -43,11 +43,11 @@ public class HealthRiskHistory {
         this.yearOfObservation = yearOfObservation;
     }
 
-    public double getAmountOfSubstance() {
-        return amountOfSubstance;
+    public double getResultRiskNumber() {
+        return resultRiskNumber;
     }
-    public void setAmountOfSubstance(double amountOfSubstance) {
-        this.amountOfSubstance = amountOfSubstance;
+    public void setResultRiskNumber(double resultRiskNumber) {
+        this.resultRiskNumber = resultRiskNumber;
     }
 
     public RiskLevel getRiskLevel() {
@@ -75,9 +75,9 @@ public class HealthRiskHistory {
     public HealthRiskHistory() {
     }
 
-    public HealthRiskHistory(String yearOfObservation, double amountOfSubstance, HealthRisk healthRisk, Objects object) {
+    public HealthRiskHistory(String yearOfObservation, double resultRiskNumber, HealthRisk healthRisk, Objects object) {
         this.yearOfObservation = yearOfObservation;
-        this.amountOfSubstance = amountOfSubstance;
+        this.resultRiskNumber = resultRiskNumber;
         this.healthRisk = healthRisk;
         this.object = object;
     }

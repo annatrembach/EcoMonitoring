@@ -9,9 +9,10 @@ public class HealthRiskService {
 
     private static final double AVERAGE_HUMAN_BODY_WEIGHT = 70.0;
     private static final int FREQUENCY_EXPOSURE_DAYS = 365;
+    private static final double SCALING_FACTOR = 1000.0;
 
     public double convertTonsPerYearToMgPerDay(double amountOfSubstance) {
-        return amountOfSubstance / 31536;
+        return amountOfSubstance / (31536 * SCALING_FACTOR);
     }
 
     public double calculateHQ(double amountOfSubstance, double parameter) {

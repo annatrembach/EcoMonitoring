@@ -58,16 +58,14 @@ public class HealthRiskHistoryController {
                 .mapToDouble(SubstanceHistory::getSubstanceValue)
                 .sum();
 
-        healthRiskHistory.setAmountOfSubstance(amountOfSubstance);
-
         if(healthRiskHistory.healthRisk.agentType == AgentType.NonCarcinogenic)
         {   healthRiskHistory.setRiskLevel(RiskLevel.nonCarcinogenicRiskLevel(healthRiskService.calculateHQ(amountOfSubstance, healthRiskHistory.healthRisk.parameter)));
             double temp = healthRiskService.calculateHQ(amountOfSubstance, healthRiskHistory.healthRisk.parameter);
-            System.out.println(temp);
+            healthRiskHistory.setResultRiskNumber(temp);
         } else if(healthRiskHistory.healthRisk.agentType == AgentType.Carcinogenic) {
             healthRiskHistory.setRiskLevel(RiskLevel.carcinogenicRiskLevel(healthRiskService.calculateCR(amountOfSubstance, healthRiskHistory.healthRisk.parameter)));
             double temp = healthRiskService.calculateCR(amountOfSubstance, healthRiskHistory.healthRisk.parameter);
-            System.out.println(temp);
+            healthRiskHistory.setResultRiskNumber(temp);
         }
         repository.create(healthRiskHistory);
         return "redirect:/HealthRiskHistory";
@@ -90,7 +88,7 @@ public class HealthRiskHistoryController {
         HealthRiskHistory healthRiskHistory = repository.findById(HealthRiskHistory.class, id);
         if (healthRiskHistory != null) {
             healthRiskHistory.setYearOfObservation(updatedHistory.getYearOfObservation());
-            healthRiskHistory.setAmountOfSubstance(updatedHistory.getAmountOfSubstance());
+            healthRiskHistory.setResultRiskNumber(updatedHistory.getResultRiskNumber());
             healthRiskHistory.setObject(updatedHistory.getObject());
             repository.update(healthRiskHistory);
         }
