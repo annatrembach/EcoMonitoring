@@ -31,7 +31,7 @@
    ![Tax Page Screenshot](screenshots/TaxesPageScreen.png)
 
 6. **Tax History Page**: Shows a detailed history of tax records calculated for businesses or objects.  
-   ![Tax History Screenshot](screenshots/TaxHistoryPageScreen.png)
+   ![Tax History Screenshot](screenshots/TaxesHistoryPageScreen.png)
 
 7. **Health Risk Page**: Presents information about health risks associated with different substances or emissions.  
    ![Health Risk Screenshot](screenshots/HealthRisksPageScreen.png)
@@ -57,4 +57,4 @@
 3. Set up database (PostgreSQL) and configure the application properties.
 4. Run the application:
   ```bash
-  ./mvnw spring-boot:run
+   ./mvnw spring-boot:run
