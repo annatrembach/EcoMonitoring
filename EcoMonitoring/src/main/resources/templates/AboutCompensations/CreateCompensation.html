@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Compensation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .optional-field {
+            display: none;
+        }
+        .text-danger {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Create Compensation</h1>
+    <form id="compensationForm" th:action="@{/CreateCompensation}" method="post" class="mt-4" onsubmit="return validateForm()">
+
+        <div id="mpcField" class="mb-3">
+            <label for="mpc" class="form-label">Maximum Permissible Concentration (MPC):</label>
+            <input type="number" id="mpc" name="MPC" class="form-control" placeholder="Enter MPC value" required step="0.01">
+            <div id="mpc-warning-message" class="text-danger mt-2">Warning: The value cannot be less than 0.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="substance" class="form-label">Substance:</label>
+            <select id="substance" name="substanceId" class="form-control" required>
+                <option value="" disabled selected>Select substance</option>
+                <option th:each="substance : ${substances}" th:value="${substance.id}" th:text="${substance.name}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function validateForm() {
+        const mpcInput = document.getElementById('mpc');
+        const mpcWarningMessage = document.getElementById('mpc-warning-message');
+
+        if (mpcInput.value !== '' && parseFloat(mpcInput.value) < 0) {
+            mpcWarningMessage.style.display = 'block';
+            return false;
+        } else {
+            mpcWarningMessage.style.display = 'none';
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

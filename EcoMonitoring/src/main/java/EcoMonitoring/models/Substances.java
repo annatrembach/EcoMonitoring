@@ -29,19 +29,22 @@ public class Substances {
     @OneToOne(mappedBy = "substance", fetch = FetchType.EAGER)
     public Taxes tax;
 
+    @OneToOne(mappedBy = "substance", fetch = FetchType.EAGER)
+    public Compensations compensation;
+
     //Constructors
     public Substances() {
     }
 
-    public Substances(PollutionType pollutionType, String name, List<SubstanceHistory> substanceHistories, Taxes tax) {
+    public Substances(PollutionType pollutionType, String name, List<SubstanceHistory> substanceHistories, Taxes tax, Compensations compensation) {
         this.pollutionType = pollutionType;
         this.name = name;
         this.substanceHistories = substanceHistories;
         this.tax = tax;
+        this.compensation = compensation;
     }
 
     //Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -76,5 +79,26 @@ public class Substances {
     }
     public void setTax(Taxes tax) {
         this.tax = tax;
+    }
+
+    public PollutionType getPollutionType() {
+        return pollutionType;
+    }
+    public void setPollutionType(PollutionType pollutionType) {
+        this.pollutionType = pollutionType;
+    }
+
+    public List<HealthRisk> getHealthRisks() {
+        return healthRisks;
+    }
+    public void setHealthRisks(List<HealthRisk> healthRisks) {
+        this.healthRisks = healthRisks;
+    }
+
+    public Compensations getCompensation() {
+        return compensation;
+    }
+    public void setCompensation(Compensations compensation) {
+        this.compensation = compensation;
     }
 }

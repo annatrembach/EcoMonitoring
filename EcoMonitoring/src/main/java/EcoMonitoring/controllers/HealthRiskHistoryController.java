@@ -77,6 +77,8 @@ public class HealthRiskHistoryController {
         if (healthRiskHistory != null) {
             model.addAttribute("healthRiskHistory", healthRiskHistory);
             model.addAttribute("healthRisks", repository.findAll(HealthRisk.class));
+            model.addAttribute("objects", repository.findAll(Objects.class));
+
         } else {
             model.addAttribute("error", "Health risk history not found.");
         }

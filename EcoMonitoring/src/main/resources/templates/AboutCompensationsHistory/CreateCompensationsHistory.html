@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Compensations History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Create Compensations History</h1>
+    <form action="/CreateCompensationsHistory" method="post">
+
+        <div class="mb-3">
+            <label for="objectSelect" class="form-label">Object:</label>
+            <select id="objectSelect" th:name="objectId" class="form-select">
+                <option th:each="object : ${objects}" th:value="${object.id}" th:text="${object.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="сompensationSelect" class="form-label">Compensation:</label>
+            <select id="сompensationSelect" th:name="compensationId" class="form-select">
+                <option th:each="compensation : ${compensations}" th:value="${compensation.id}" th:text="${compensation.substance.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="yearOfLossInput" class="form-label">Year of Loss</label>
+            <input type="text" name="yearOfLoss" id="yearOfLossInput" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="emissionTypeSelect" class="form-label">Emission Type</label>
+            <select name="emissionType" id="emissionTypeSelect" class="form-select" required>
+                <option value="">Select Emission Type</option>
+                <option value="Air">Air</option>
+                <option value="WaterReturn">Water Return</option>
+                <option value="WaterReturnSeaWaters">Water Return (Sea Waters)</option>
+                <option value="WaterReturnAccidentClear">Water Return (Accident Clear)</option>
+                <option value="WaterReturnAccidentClearSeaWaters">Water Return (Accident Clear - Sea Waters)</option>
+                <option value="WaterArbitraryUse">Water Arbitrary Use</option>
+                <option value="WaterUnderground">Water Underground</option>
+            </select>
+        </div>
+
+        <div id="airFields" class="additional-fields" style="display: none;">
+            <h5>Air Parameters</h5>
+            <div class="mb-3">
+                <label for="PVIInput">PVI</label>
+                <input type="number" name="pvi" id="PVIInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="PVNormInput">PV Norm</label>
+                <input type="number" name="pvnorm" id="PVNormInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QV0Input">QV0</label>
+                <input type="number" name="qv0" id="QV0Input" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TInput">T</label>
+                <input type="number" name="TAir" id="TInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="PInput">P</label>
+                <input type="number" name="P" id="PInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KtInput">Kt</label>
+                <input type="number" name="Kt" id="KtInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KsiInput">Ksi</label>
+                <input type="number" name="Ksi" id="KsiInput" class="form-control">
+            </div>
+        </div>
+
+        <div id="waterReturnFields" class="additional-fields" style="display: none;">
+            <h5>Water Return Parameters</h5>
+            <div class="mb-3">
+                <label for="CifInput">Cif</label>
+                <input type="number" name="Cif1" id="CifInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="CidInput">Cid</label>
+                <input type="number" name="Cid1" id="CidInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QifInput">Qif</label>
+                <input type="number" name="Qif1" id="QifInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TimeInput">T</label>
+                <input type="number" name="T1" id="TimeInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KkatInput">Kkat</label>
+                <input type="number" name="Kkat1" id="KkatInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KpInput">Kp</label>
+                <input type="number" name="Kp1" id="KpInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="YiInput">Yi</label>
+                <input type="number" name="Yi1" id="YiInput" class="form-control">
+            </div>
+        </div>
+
+        <div id="waterReturnSeaFields" class="additional-fields" style="display: none;">
+            <h5>Water Return (Sea Waters)</h5>
+            <div class="mb-3">
+                <label for="CifSeaInput">Cif</label>
+                <input type="number" name="Cif2" id="CifSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="CidSeaInput">Cid</label>
+                <input type="number" name="Cid2" id="CidSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QifSeaInput">Qif</label>
+                <input type="number" name="Qif2" id="QifSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TSeaInput">T</label>
+                <input type="number" name="T2" id="TSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KcInput">Kc</label>
+                <input type="number" name="Kc2" id="KcInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KaInput">Ka</label>
+                <input type="number" name="Ka2" id="KaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KbInput">Kb</label>
+                <input type="number" name="Kb2" id="KbInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KdInput">Kd</label>
+                <input type="number" name="Kd2" id="KdInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="mSeaInput">m</label>
+                <input type="number" name="m2" id="mSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="MiSeaInput">Mi</label>
+                <input type="number" name="Mi2" id="MiSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="YiSeaInput">Yi</label>
+                <input type="number" name="Yi2" id="YiSeaInput" class="form-control">
+            </div>
+        </div>
+
+        <div id="waterReturnAccidentClearFields" class="additional-fields" style="display: none;">
+            <h5>Water Return (Accident Clear)</h5>
+            <div class="mb-3">
+                <label for="CifAccidentClearInput">Cif</label>
+                <input type="number" name="Cif3" id="CifAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="CidAccidentClearInput">Cid</label>
+                <input type="number" name="Cid3" id="CidAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QifAccidentClearInput">Qif</label>
+                <input type="number" name="Qif3" id="QifAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TAccidentClearInput">T</label>
+                <input type="number" name="T3" id="TAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KkatAccidentClearInput">Kkat</label>
+                <input type="number" name="Kkat3" id="KkatAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KpAccidentClearInput">Kp</label>
+                <input type="number" name="Kp3" id="KpAccidentClearInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="YiAccidentClearInput">Yi</label>
+                <input type="number" name="Yi3" id="YiAccidentClearInput" class="form-control">
+            </div>
+        </div>
+
+        <div id="waterReturnAccidentClearSeaFields" class="additional-fields" style="display: none;">
+            <h5>Water Return (Accident Clear - Sea Waters)</h5>
+            <div class="mb-3">
+                <label for="CifAccidentClearSeaInput">Cif</label>
+                <input type="number" name="Cif4" id="CifAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="CidAccidentClearSeaInput">Cid</label>
+                <input type="number" name="Cid4" id="CidAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QifAccidentClearSeaInput">Qif</label>
+                <input type="number" name="Qif4" id="QifAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TAccidentClearSeaInput">T</label>
+                <input type="number" name="T4" id="TAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KcAccidentClearSeaInput">Kc</label>
+                <input type="number" name="Kc4" id="KcAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KaAccidentClearSeaInput">Ka</label>
+                <input type="number" name="Ka4" id="KaAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KbAccidentClearSeaInput">Kb</label>
+                <input type="number" name="Kb4" id="KbAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KdAccidentClearSeaInput">Kd</label>
+                <input type="number" name="Kd4" id="KdAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="mAccidentClearSeaInput">m</label>
+                <input type="number" name="m4" id="mAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="MiAccidentClearSeaInput">Mi</label>
+                <input type="number" name="Mi4" id="MiAccidentClearSeaInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="YiAccidentClearSeaInput">Yi</label>
+                <input type="number" name="Yi4" id="YiAccidentClearSeaInput" class="form-control">
+            </div>
+        </div>
+
+        <!-- Water Arbitrary Use -->
+        <div id="waterArbitraryFields" class="additional-fields" style="display: none;">
+            <h5>Water Arbitrary Use</h5>
+            <div class="mb-3">
+                <label for="WInput">W</label>
+                <input type="number" name="W" id="WInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TapInput">Tap</label>
+                <input type="number" name="Tap" id="TapInput" class="form-control">
+            </div>
+        </div>
+
+        <!-- Underground Water -->
+        <div id="undergroundWaterFields" class="additional-fields" style="display: none;">
+            <h5>Underground Water Parameters</h5>
+            <div class="mb-3">
+                <label for="CifUndergroundInput">Cif</label>
+                <input type="number" name="Cif5" id="CifUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="CidUndergroundInput">Cid</label>
+                <input type="number" name="Cid5" id="CidUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="QifUndergroundInput">Qif</label>
+                <input type="number" name="Qif5" id="QifUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="TUndergroundInput">T</label>
+                <input type="number" name="T5" id="TUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KkatUndergroundInput">Kkat</label>
+                <input type="number" name="Kkat5" id="KkatUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="KpUndergroundInput">Kp</label>
+                <input type="number" name="Kp5" id="KpUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="YiUndergroundInput">Yi</label>
+                <input type="number" name="Yi5" id="YiUndergroundInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="LUndergroundInput">L</label>
+                <input type="number" name="L5" id="LUndergroundInput" class="form-control">
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("emissionTypeSelect").addEventListener("change", function () {
+
+        document.querySelectorAll(".additional-fields").forEach(field => field.style.display = "none");
+
+        const selectedEmissionType = this.value;
+
+        switch (selectedEmissionType) {
+            case "Air":
+                document.getElementById("airFields").style.display = "block";
+                break;
+            case "WaterReturn":
+                document.getElementById("waterReturnFields").style.display = "block";
+                break;
+            case "WaterReturnSeaWaters":
+                document.getElementById("waterReturnSeaFields").style.display = "block";
+                break;
+            case "WaterReturnAccidentClear":
+                document.getElementById("waterReturnAccidentClearFields").style.display = "block";
+                break;
+            case "WaterReturnAccidentClearSeaWaters":
+                document.getElementById("waterReturnAccidentClearSeaFields").style.display = "block";
+                break;
+            case "WaterArbitraryUse":
+                document.getElementById("waterArbitraryFields").style.display = "block";
+                break;
+            case "WaterUnderground":
+                document.getElementById("undergroundWaterFields").style.display = "block";
+                break;
+            default:
+                break;
+        }
+    });
+</script>
+</body>
+</html>

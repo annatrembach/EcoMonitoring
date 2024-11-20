@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Compensation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Delete Compensation</h1>
+
+    <div th:if="${compensation != null}" class="alert alert-warning">
+        <p>Are you sure you want to delete this compensation?</p>
+        <p><strong>Compensation ID:</strong> <span th:text="${compensation.id}"></span></p>
+        <p><strong>Maximum Permissible Concentration (MPC):</strong> <span th:text="${compensation.MPC}"></span></p>
+        <p><strong>Substance:</strong> <span th:text="${compensation.substance.name}"></span></p>
+
+        <form action="/DeleteCompensation" method="post" class="mt-3">
+            <input type="hidden" name="id" th:value="${compensation.id}">
+            <button type="submit" class="btn btn-danger">Delete Compensation</button>
+            <a class="btn btn-secondary" th:href="@{/Compensations}" role="button">Cancel</a>
+        </form>
+    </div>
+
+    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

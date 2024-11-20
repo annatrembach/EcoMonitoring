@@ -18,7 +18,9 @@ public class Util {
                     .addAnnotatedClass(TaxesHistory.class)
                     .addAnnotatedClass(Taxes.class)
                     .addAnnotatedClass(HealthRisk.class)
-                    .addAnnotatedClass(HealthRiskHistory.class);
+                    .addAnnotatedClass(HealthRiskHistory.class)
+                    .addAnnotatedClass(Compensations.class)
+                    .addAnnotatedClass(CompensationsHistory.class);
             configuration.configure("hibernate.cfg.xml");
             System.out.println("Hibernate Configuration loaded");
 
