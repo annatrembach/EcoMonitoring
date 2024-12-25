@@ -292,38 +292,161 @@
 </div>
 
 <script>
-    document.getElementById("emissionTypeSelect").addEventListener("change", function () {
+    function updateDamageFields() {
+       var damageType = document.getElementById('damageType').value;
+       var crisisDamageType = document.getElementById('crisisDamageType').value;
 
-        document.querySelectorAll(".additional-fields").forEach(field => field.style.display = "none");
+       // Сховати всі основні параметри
+       document.querySelectorAll('.parameters').forEach(function(div) {
+           div.style.display = 'none';
+       });
 
-        const selectedEmissionType = this.value;
+       // Показати відповідний блок параметрів для damageType
+       if (damageType === "Air") {
+           document.getElementById("airFields").style.display = "block";
+       } else if (damageType === "Water") {
+           document.getElementById("waterFields").style.display = "block";
+       } else if (damageType === "Soil") {
+           document.getElementById("soilFields").style.display = "block";
+       } else if (damageType === "Forest") {
+           document.getElementById("forestFields").style.display = "block";
+       }
 
-        switch (selectedEmissionType) {
-            case "Air":
-                document.getElementById("airFields").style.display = "block";
-                break;
-            case "WaterReturn":
-                document.getElementById("waterReturnFields").style.display = "block";
-                break;
-            case "WaterReturnSeaWaters":
-                document.getElementById("waterReturnSeaFields").style.display = "block";
-                break;
-            case "WaterReturnAccidentClear":
-                document.getElementById("waterReturnAccidentClearFields").style.display = "block";
-                break;
-            case "WaterReturnAccidentClearSeaWaters":
-                document.getElementById("waterReturnAccidentClearSeaFields").style.display = "block";
-                break;
-            case "WaterArbitraryUse":
-                document.getElementById("waterArbitraryFields").style.display = "block";
-                break;
-            case "WaterUnderground":
-                document.getElementById("undergroundWaterFields").style.display = "block";
-                break;
-            default:
-                break;
-        }
-    });
+       // Сховати всі підкатегорії
+       document.querySelectorAll('.subcategory-parameters').forEach(function(div) {
+           div.style.display = 'none';
+       });
+
+       // Показати блок параметрів для вибраної підкатегорії
+       if (crisisDamageType !== "") {
+           var paramsId = "";
+           switch (crisisDamageType) {
+               case "Air":
+                   paramsId = "airParams";
+                   break;
+               case "WaterReturn":
+                   paramsId = "waterReturnParams";
+                   break;
+               case "WaterReturnSeaWaters":
+                   paramsId = "waterReturnSeaWatersParams";
+                   break;
+               case "WaterReturnAccidentClear":
+                   paramsId = "waterReturnAccidentClearParams";
+                   break;
+               case "WaterReturnAccidentClearSeaWaters":
+                   paramsId = "waterReturnAccidentClearSeaWatersParams";
+                   break;
+               case "WaterArbitraryUse":
+                   paramsId = "waterArbitraryParams";
+                   break;
+               case "WaterUnderground":
+                   paramsId = "undergroundWaterParams";
+                   break;
+               case "SoilPollution":
+                   paramsId = "soilPollutionParams";
+                   break;
+               case "ForestReclamationCost":
+                   paramsId = "forestReclamationCostParams";
+                   break;
+               case "ForestProductionLoss":
+                   paramsId = "forestProductionLossParams";
+                   break;
+               case "ForestDamagedTimberLoss":
+                   paramsId = "forestDamagedTimberLossParams";
+                   break;
+               case "ForestForegoneIncome":
+                   paramsId = "forestForegoneIncomeParams";
+                   break;
+               case "ForestResourceLoss":
+                   paramsId = "forestResourceLossParams";
+                   break;
+               case "ForestUsageLoss":
+                   paramsId = "forestUsageLossParams";
+                   break;
+               case "ForestPreparationCost":
+                   paramsId = "forestPreparationCostParams";
+                   break;
+               case "ForestNurseryDamage":
+                   paramsId = "forestNurseryDamageParams";
+                   break;
+               case "ForestHuntingLoss":
+                   paramsId = "forestHuntingLossParams";
+                   break;
+               default:
+                   break;
+           }
+
+           // Відображаємо параметри, якщо знайдено відповідний блок
+           if (paramsId !== "") {
+               document.getElementById(paramsId).style.display = "block";
+           }
+       }
+   }
+
+   // Функція для оновлення списку підкатегорій залежно від damageType
+   function updateCrisisDamageTypeOptions(options) {
+       var select = document.getElementById('crisisDamageType');
+       select.innerHTML = ''; // Очищення списку
+
+       options.forEach(function(option) {
+           var opt = document.createElement('option');
+           opt.value = option;
+           opt.textContent = option;
+           select.appendChild(opt);
+       });
+
+       // Вибрати перший елемент за замовчуванням
+       if (options.length > 0) {
+           select.value = options[0];
+       }
+   }
+
+   // Виклик при зміні damageType
+   document.getElementById('damageType').addEventListener('change', function() {
+       var damageType = this.value;
+
+       // Оновити підкатегорії
+       if (damageType === "Air") {
+           updateCrisisDamageTypeOptions(["Air"]);
+       } else if (damageType === "Water") {
+           updateCrisisDamageTypeOptions([
+               "WaterReturn",
+               "WaterReturnSeaWaters",
+               "WaterReturnAccidentClear",
+               "WaterReturnAccidentClearSeaWaters",
+               "WaterArbitraryUse",
+               "WaterUnderground"
+           ]);
+       } else if (damageType === "Soil") {
+           updateCrisisDamageTypeOptions(["SoilPollution"]);
+       } else if (damageType === "Forest") {
+           updateCrisisDamageTypeOptions([
+               "ForestReclamationCost",
+               "ForestProductionLoss",
+               "ForestDamagedTimberLoss",
+               "ForestForegoneIncome",
+               "ForestResourceLoss",
+               "ForestUsageLoss",
+               "ForestPreparationCost",
+               "ForestNurseryDamage",
+               "ForestHuntingLoss"
+           ]);
+       }
+
+       // Оновити параметри
+       updateDamageFields();
+   });
+
+   // Виклик при зміні crisisDamageType
+   document.getElementById('crisisDamageType').addEventListener('change', function() {
+       updateDamageFields();
+   });
+
+   // Ініціалізація при завантаженні сторінки
+   window.onload = function() {
+       updateDamageFields();
+   };
+
 </script>
 </body>
 </html>

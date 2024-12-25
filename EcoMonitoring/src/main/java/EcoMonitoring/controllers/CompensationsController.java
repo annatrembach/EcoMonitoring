@@ -1,8 +1,7 @@
 package EcoMonitoring.controllers;
 
-import EcoMonitoring.models.AgentType;
 import EcoMonitoring.models.Compensations;
-import EcoMonitoring.models.EmissionType;
+import EcoMonitoring.models.Enums.EmissionType;
 import EcoMonitoring.models.Substances;
 import EcoMonitoring.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

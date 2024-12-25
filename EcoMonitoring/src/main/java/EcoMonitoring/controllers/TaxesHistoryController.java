@@ -1,6 +1,7 @@
 package EcoMonitoring.controllers;
 
 import EcoMonitoring.models.*;
+import EcoMonitoring.models.Enums.TaxType;
 import EcoMonitoring.repository.Repository;
 import EcoMonitoring.services.TaxService;
 import EcoMonitoring.viewModels.TaxSummaryEntry;

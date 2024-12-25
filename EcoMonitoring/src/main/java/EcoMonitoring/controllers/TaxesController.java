@@ -2,7 +2,7 @@ package EcoMonitoring.controllers;
 
 import EcoMonitoring.models.Taxes;
 import EcoMonitoring.models.Substances;
-import EcoMonitoring.models.TaxType;
+import EcoMonitoring.models.Enums.TaxType;
 import EcoMonitoring.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

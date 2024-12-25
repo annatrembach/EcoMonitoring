@@ -14,23 +14,35 @@
             font-size: 1.1rem;
             border-radius: 0.5rem;
         }
-        .nav-link:hover {
-            background-color: #0069d9;
-            color: #fff !important;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
         .nav-link {
-            transition: transform 0.2s ease-in-out;
+            color: #6c757d !important; /* Сірий текст */
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
         }
         .nav-link:hover {
-            transform: scale(1.05);
+            background-color: rgba(0, 123, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            color: #0056b3 !important; /* Темно-синій при наведенні */
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .dropdown-item {
+            color: #6c757d !important; /* Сірий текст */
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, box-shadow 0.3s ease, color 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            color: #0056b3 !important; /* Темно-синій при наведенні */
         }
     </style>
 </head>
@@ -47,29 +59,44 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Objects"><i class="fas fa-building"></i> Objects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Substances"><i class="fas fa-vial"></i> Substances</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="substancesDropdown" role="button">
+                            <i class="fas fa-vial"></i> Substance
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="substancesDropdown">
+                            <li><a class="dropdown-item" href="/Substances">Substance</a></li>
+                            <li><a class="dropdown-item" href="/SubstanceHistory">Substance History</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="taxRateDropdown" role="button">
+                            <i class="fas fa-percentage"></i> Tax Rate
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="taxRateDropdown">
+                            <li><a class="dropdown-item" href="/Taxes">Tax Rate</a></li>
+                            <li><a class="dropdown-item" href="/TaxesHistory">Tax History</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="healthRiskDropdown" role="button">
+                            <i class="fas fa-heartbeat"></i> Health Risk
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="healthRiskDropdown">
+                            <li><a class="dropdown-item" href="/HealthRisks">Health Risk</a></li>
+                            <li><a class="dropdown-item" href="/HealthRiskHistory">Health Risk History</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="compensationsDropdown" role="button">
+                            <i class="fas fa-hand-holding-usd"></i> Compensations
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="compensationsDropdown">
+                            <li><a class="dropdown-item" href="/Compensations">Compensations</a></li>
+                            <li><a class="dropdown-item" href="/CompensationsHistory">Compensations History</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/SubstanceHistory"><i class="fas fa-history"></i> History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Taxes"><i class="fas fa-percentage"></i> Tax Rate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/TaxesHistory"><i class="fas fa-book"></i> Tax History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/HealthRisks"><i class="fas fa-heartbeat"></i> Health Risk</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/HealthRiskHistory"><i class="fas fa-notes-medical"></i> Health Risk History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Compensations"><i class="fas fa-notes-medical"></i> Compensations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/CompensationsHistory"><i class="fas fa-notes-medical"></i> Compensations History</a>
+                        <a class="nav-link" href="/CrisisDamageHistory"><i class="fas fa-exclamation-triangle"></i> Damage History</a>
                     </li>
                 </ul>
             </div>

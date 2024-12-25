@@ -1,6 +1,6 @@
 package EcoMonitoring.controllers;
 
-import EcoMonitoring.models.PollutionType;
+import EcoMonitoring.models.Enums.PollutionType;
 import EcoMonitoring.models.Substances;
 import EcoMonitoring.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

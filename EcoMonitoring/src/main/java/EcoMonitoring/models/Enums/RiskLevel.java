@@ -1,4 +1,4 @@
-package EcoMonitoring.models;
+package EcoMonitoring.models.Enums;
 
 public enum RiskLevel {
     Minimum, Low, Average, High;

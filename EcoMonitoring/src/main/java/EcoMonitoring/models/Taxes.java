@@ -1,5 +1,6 @@
 package EcoMonitoring.models;
 
+import EcoMonitoring.models.Enums.TaxType;
 import jakarta.persistence.*;
 
 import java.util.List;

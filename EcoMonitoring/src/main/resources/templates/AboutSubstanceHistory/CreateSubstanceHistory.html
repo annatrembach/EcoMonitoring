@@ -2,164 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Compensations History</title>
+    <title>Create Substance History</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .invalid-feedback {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
 <div class="container mt-4">
-    <h2>Create Compensation History</h2>
-
-    <form action="#" th:action="@{/CreateCompensationsHistory}" method="post">
-
-        <!-- Select Object -->
+    <h1 class="mb-4">Create Substance History</h1>
+    <form id="substanceHistoryForm" th:action="@{/CreateSubstanceHistory}" method="post" class="mt-4">
         <div class="mb-3">
-            <label for="objectId" class="form-label">Object</label>
-            <select name="objectId" id="objectId" class="form-control" required>
-                <option th:each="object : ${objects}" th:value="${object.id}" th:text="${object.name}"></option>
+            <label for="substanceId" class="form-label">Substance:</label>
+            <select id="substanceId" name="substanceId" class="form-control" required>
+                <option th:each="substance : ${substances}" th:value="${substance.id}" th:text="${substance.name}">Substance Name</option>
             </select>
         </div>
 
-        <!-- Select Compensation -->
         <div class="mb-3">
-            <label for="compensationId" class="form-label">Compensation</label>
-            <select name="compensationId" id="compensationId" class="form-control" required>
-                <option th:each="compensation : ${compensations}" th:value="${compensation.id}" th:text="${compensation.name}"></option>
+            <label for="substanceValue" class="form-label">Substance Value:</label>
+            <input type="number" id="substanceValue" name="substanceValue" class="form-control" placeholder="Substance Value" required>
+            <div class="invalid-feedback">Substance Value must be 0 or greater.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="yearOfObservation" class="form-label">Year of Observation:</label>
+            <input type="number" id="yearOfObservation" name="yearOfObservation" class="form-control" placeholder="Year of Observation" required>
+            <div class="invalid-feedback">Year cannot be greater than the current year.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="objectId" class="form-label">Object:</label>
+            <select id="objectId" name="objectId" class="form-control" required>
+                <option th:each="object : ${objects}" th:value="${object.id}" th:text="${object.name}">Object Name</option>
             </select>
         </div>
 
-        <!-- Year of Loss -->
-        <div class="mb-3">
-            <label for="yearOfLoss" class="form-label">Year of Loss</label>
-            <input type="text" name="yearOfLoss" id="yearOfLoss" class="form-control" required />
-        </div>
-
-        <!-- Emission Type Selection -->
-        <div class="mb-3">
-            <label for="emissionType" class="form-label">Emission Type</label>
-            <select name="emissionType" id="emissionType" class="form-control" required>
-                <option value="AIR">Air</option>
-                <option value="WATER_RETURN">Water Return</option>
-                <option value="WATER_RETURN_SEA_WATERS">Water Return Sea Waters</option>
-                <option value="WATER_RETURN_ACCIDENT_CLEAR">Water Return Accident Clear</option>
-                <option value="WATER_RETURN_ACCIDENT_CLEAR_SEA_WATERS">Water Return Accident Clear Sea Waters</option>
-                <option value="WATER_ARBITRARY_USE">Water Arbitrary Use</option>
-                <option value="WATER_UNDERGROUND">Water Underground</option>
-            </select>
-        </div>
-
-        <!-- Compensation Amount Inputs for Water Tax -->
-        <div id="waterTaxFields" class="additional-fields">
-            <div class="mb-3">
-                <label for="pvi" class="form-label">PVI</label>
-                <input type="number" name="pvi" id="pvi" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="pvnorm" class="form-label">PV Norm</label>
-                <input type="number" name="pvnorm" id="pvnorm" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="qv0" class="form-label">QV0</label>
-                <input type="number" name="qv0" id="qv0" class="form-control" step="any" />
-            </div>
-        </div>
-
-        <!-- Compensation Amount Inputs for Water Return (Example) -->
-        <div id="waterReturnFields" class="additional-fields">
-            <div class="mb-3">
-                <label for="Cif" class="form-label">Cif</label>
-                <input type="number" name="Cif" id="Cif" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Cid" class="form-label">Cid</label>
-                <input type="number" name="Cid" id="Cid" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Qif" class="form-label">Qif</label>
-                <input type="number" name="Qif" id="Qif" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="T" class="form-label">T</label>
-                <input type="number" name="T" id="T" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Kkat" class="form-label">Kkat</label>
-                <input type="number" name="Kkat" id="Kkat" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Kp" class="form-label">Kp</label>
-                <input type="number" name="Kp" id="Kp" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Yi" class="form-label">Yi</label>
-                <input type="number" name="Yi" id="Yi" class="form-control" step="any" />
-            </div>
-        </div>
-
-        <!-- Compensation Amount Inputs for Water Arbitrary Use -->
-        <div id="waterArbitraryUseFields" class="additional-fields">
-            <div class="mb-3">
-                <label for="W" class="form-label">W</label>
-                <input type="number" name="W" id="W" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="Tap" class="form-label">Tap</label>
-                <input type="number" name="Tap" id="Tap" class="form-control" step="any" />
-            </div>
-        </div>
-
-        <!-- Compensation Amount Inputs for Underground Water -->
-        <div id="waterUndergroundFields" class="additional-fields">
-            <div class="mb-3">
-                <label for="Krp" class="form-label">Krp</label>
-                <input type="number" name="Krp" id="Krp" class="form-control" step="any" />
-            </div>
-            <div class="mb-3">
-                <label for="L" class="form-label">L</label>
-                <input type="number" name="L" id="L" class="form-control" step="any" />
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Create Compensation History</button>
-        </div>
-
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary" th:href="@{/SubstanceHistory}" role="button">Back to Substance History</a>
     </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('emissionType').addEventListener('change', function() {
-        const selectedType = this.value;
+    document.getElementById('substanceHistoryForm').addEventListener('submit', function(event) {
+        const yearInput = document.getElementById('yearOfObservation');
+        const substanceValueInput = document.getElementById('substanceValue');
+        const currentYear = new Date().getFullYear();
 
-        // Hide all compensation fields initially
-        document.querySelectorAll('.additional-fields').forEach(field => {
-            field.style.display = 'none';
-        });
+        let valid = true;
 
-        // Show relevant fields based on the selected emission type
-        switch (selectedType) {
-            case 'WATER_RETURN':
-                document.getElementById('waterReturnFields').style.display = 'block';
-                break;
-            case 'WATER_ARBITRARY_USE':
-                document.getElementById('waterArbitraryUseFields').style.display = 'block';
-                break;
-            case 'WATER_UNDERGROUND':
-                document.getElementById('waterUndergroundFields').style.display = 'block';
-                break;
-            case 'AIR':
-            case 'WATER_RETURN_SEA_WATERS':
-            case 'WATER_RETURN_ACCIDENT_CLEAR':
-            case 'WATER_RETURN_ACCIDENT_CLEAR_SEA_WATERS':
-                // No additional fields for these types, no action needed
-                break;
-            default:
-                break;
+
+        if (yearInput.value > currentYear) {
+            yearInput.classList.add('is-invalid');
+            yearInput.nextElementSibling.style.display = 'block';
+            valid = false;
+        } else {
+            yearInput.classList.remove('is-invalid');
+            yearInput.nextElementSibling.style.display = 'none';
+        }
+
+
+        if (substanceValueInput.value < 0) {
+            substanceValueInput.classList.add('is-invalid');
+            substanceValueInput.nextElementSibling.style.display = 'block';
+            valid = false;
+        } else {
+            substanceValueInput.classList.remove('is-invalid');
+            substanceValueInput.nextElementSibling.style.display = 'none';
+        }
+
+        if (!valid) {
+            event.preventDefault(); // Prevent form submission
         }
     });
 </script>
-
 </body>
 </html>

@@ -1,5 +1,6 @@
 package EcoMonitoring.models;
 
+import EcoMonitoring.models.Enums.AgentType;
 import jakarta.persistence.*;
 
 @Entity

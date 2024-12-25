@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Crisis Damage History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Create Crisis Damage History</h1>
+    <form action="/CreateCrisisDamageHistory" method="post">
+
+        <div class="mb-3">
+            <label for="objectSelect" class="form-label">Object:</label>
+            <select id="objectSelect" th:name="objectId" class="form-select">
+                <option th:each="object : ${objects}" th:value="${object.id}" th:text="${object.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="substanceId" class="form-label">Substance:</label>
+            <select id="substanceId" name="substanceId" class="form-control" required>
+                <option th:each="substance : ${substances}" th:value="${substance.id}" th:text="${substance.name}">Substance Name</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="yearOfDamage" class="form-label">Year of Loss</label>
+            <input type="text" name="yearOfDamage" id="yearOfDamage" class="form-control" required>
+        </div>
+
+        <label for="damageType" class="form-label">Damage Type:</label>
+        <select id="damageType" name="damageType" class="form-select mb-3">
+            <option value="Air">Air</option>
+            <option value="Water">Water</option>
+            <option value="Soil">Soil</option>
+            <option value="Forest">Forest</option>
+        </select>
+
+        <label for="crisisDamageType" class="form-label">Crisis Damage Type:</label>
+        <select id="crisisDamageType" name="crisisDamageType" class="form-select mb-3">
+        </select>
+
+        <div id="airFields" class="mb-3">
+            <div id="airParams" style="display:none;">
+
+                <div class="mb-3">
+                    <label for="miEmission" class="form-label">miEmission:</label>
+                    <input type="number" step="0.01" id="miEmission" name="airParams.miEmission" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="sp" class="form-label">sp:</label>
+                    <input type="number" step="0.01" id="sp" name="airParams.sp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kneB" class="form-label">kneB:</label>
+                    <input type="number" step="0.01" id="kneB" name="airParams.kneB" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kv" class="form-label">kv:</label>
+                    <input type="number" step="0.01" id="kv" name="airParams.kv" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kmp" class="form-label">kmp:</label>
+                    <input type="number" step="0.01" id="kmp" name="airParams.kmp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kpp" class="form-label">kpp:</label>
+                    <input type="number" step="0.01" id="kpp" name="airParams.kpp" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="waterFields" class="mb-3">
+            <div id="waterReturnParams" style="display:none;">
+                <div class="mb-3">
+                    <label for="Cif1" class="form-label">Cif, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cif1" name="waterReturnParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid1" class="form-label">Cid, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cid1" name="waterReturnParams.Cid1" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif1" class="form-label">Qif, m^3/h:</label>
+                    <input type="number" step="0.01" id="Qif1" name="waterReturnParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T1" class="form-label">T, h:</label>
+                    <input type="number" step="0.01" id="T1" name="waterReturnParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kkat1" class="form-label">Kkat:</label>
+                    <input type="number" step="0.01" id="Kkat1" name="waterReturnParams.Kkat" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kp1" class="form-label">Kp:</label>
+                    <input type="number" step="0.01" id="Kp1" name="waterReturnParams.Kp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi1" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi1" name="waterReturnParams.Yi" class="form-control">
+                </div>
+            </div>
+
+            <div id="waterReturnSeaWatersParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="Cif2" class="form-label">Cif, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cif2" name="waterReturnSeaWatersParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid2" class="form-label">Cid, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cid2" name="waterReturnSeaWatersParams.Cid" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif2" class="form-label">Qif, m^3/h:</label>
+                    <input type="number" step="0.01" id="Qif2" name="waterReturnSeaWatersParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T2" class="form-label">T, h:</label>
+                    <input type="number" step="0.01" id="T2" name="waterReturnSeaWatersParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kc2" class="form-label">Kc:</label>
+                    <input type="number" step="0.01" id="Kc2" name="waterReturnSeaWatersParams.Kc" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Ka2" class="form-label">Ka:</label>
+                    <input type="number" step="0.01" id="Ka2" name="waterReturnSeaWatersParams.Ka" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kb2" class="form-label">Kb:</label>
+                    <input type="number" step="0.01" id="Kb2" name="waterReturnSeaWatersParams.Kb" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kd2" class="form-label">Kd:</label>
+                    <input type="number" step="0.01" id="Kd2" name="waterReturnSeaWatersParams.Kd" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="m2" class="form-label">m:</label>
+                    <input type="number" step="0.01" id="m2" name="waterReturnSeaWatersParams.m" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Mi2" class="form-label">Mi:</label>
+                    <input type="number" step="0.01" id="Mi2" name="waterReturnSeaWatersParams.Mi" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi2" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi2" name="waterReturnSeaWatersParams.Yi" class="form-control">
+                </div>
+            </div>
+
+            <div id="waterReturnAccidentClearParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="Cif3" class="form-label">Cif, g/v^3:</label>
+                    <input type="number" step="0.01" id="Cif3" name="waterReturnAccidentClearParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid3" class="form-label">Cid, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cid3" name="waterReturnAccidentClearParams.Cid" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif3" class="form-label">Qif, m^3/h:</label>
+                    <input type="number" step="0.01" id="Qif3" name="waterReturnAccidentClearParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T3" class="form-label">T, h:</label>
+                    <input type="number" step="0.01" id="T3" name="waterReturnAccidentClearParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kkat3" class="form-label">Kkat:</label>
+                    <input type="number" step="0.01" id="Kkat3" name="waterReturnAccidentClearParams.Kkat" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kp3" class="form-label">Kp:</label>
+                    <input type="number" step="0.01" id="Kp3" name="waterReturnAccidentClearParams.Kp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi3" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi3" name="waterReturnAccidentClearParams.Yi" class="form-control">
+                </div>
+            </div>
+
+            <div id="waterReturnAccidentClearSeaWatersParams" style="display:none;" class="mb-3">
+
+                <div class="mb-3">
+                    <label for="Cif4" class="form-label">Cif, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cif4" name="waterReturnAccidentClearSeaWatersParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid4" class="form-label">Cid, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cid4" name="waterReturnAccidentClearSeaWatersParams.Cid" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif4" class="form-label">Qif, m^3/h:</label>
+                    <input type="number" step="0.01" id="Qif4" name="waterReturnAccidentClearSeaWatersParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T4" class="form-label">T, h:</label>
+                    <input type="number" step="0.01" id="T4" name="waterReturnAccidentClearSeaWatersParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kc4" class="form-label">Kc:</label>
+                    <input type="number" step="0.01" id="Kc4" name="waterReturnAccidentClearSeaWatersParams.Kc" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Ka4" class="form-label">Ka:</label>
+                    <input type="number" step="0.01" id="Ka4" name="waterReturnAccidentClearSeaWatersParams.Ka" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kb4" class="form-label">Kb:</label>
+                    <input type="number" step="0.01" id="Kb4" name="waterReturnAccidentClearSeaWatersParams.Kb" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kd4" class="form-label">Kd:</label>
+                    <input type="number" step="0.01" id="Kd4" name="waterReturnAccidentClearSeaWatersParams.Kd" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="m4" class="form-label">m:</label>
+                    <input type="number" step="0.01" id="m4" name="waterReturnAccidentClearSeaWatersParams.m" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Mi4" class="form-label">Mi:</label>
+                    <input type="number" step="0.01" id="Mi4" name="waterReturnAccidentClearSeaWatersParams.Mi" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi4" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi4" name="waterReturnAccidentClearSeaWatersParams.Yi" class="form-control">
+                </div>
+            </div>
+
+            <div id="waterArbitraryUseParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="W" class="form-label">W, m^3:</label>
+                    <input type="number" step="0.01" id="W" name="W" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Tap" class="form-label">Tap, hrn/m^3:</label>
+                    <input type="number" step="0.01" id="Tap" name="Tap" class="form-control">
+                </div>
+            </div>
+
+            <div id="waterUndergroundParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="Cif5" class="form-label">Cif, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cif5" name="undergroundWaterParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid5" class="form-label">Cid, g/m^3:</label>
+                    <input type="number" step="0.01" id="Cid5" name="undergroundWaterParams.Cid" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif5" class="form-label">Qif, m^3/h:</label>
+                    <input type="number" step="0.01" id="Qif5" name="undergroundWaterParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T5" class="form-label">T, h:</label>
+                    <input type="number" step="0.01" id="T5" name="undergroundWaterParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kkat5" class="form-label">Kkat:</label>
+                    <input type="number" step="0.01" id="Kkat5" name="undergroundWaterParams.Kkat" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kp5" class="form-label">Kp:</label>
+                    <input type="number" step="0.01" id="Kp5" name="undergroundWaterParams.Kp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="L5" class="form-label">L:</label>
+                    <input type="number" step="0.01" id="L5" name="undergroundWaterParams.L" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi5" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi5" name="undergroundWaterParams.Yi" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="soilFields">
+            <div id="soilParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="Cif6" class="form-label">A:</label>
+                    <input type="number" step="0.01" id="Cif6" name="soilParams.Cif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cid6" class="form-label">B:</label>
+                    <input type="number" step="0.01" id="Cid6" name="soilParams.Cid" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Qif6" class="form-label">Goz, hrn/m^2:</label>
+                    <input type="number" step="0.01" id="Qif6" name="soilParams.Qif" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="T6" class="form-label">Pdz, m^2:</label>
+                    <input type="number" step="0.01" id="T6" name="soilParams.T" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kkat6" class="form-label">Kzz:</label>
+                    <input type="number" step="0.01" id="Kkat6" name="soilParams.Kkat" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Kp6" class="form-label">Keg:</label>
+                    <input type="number" step="0.01" id="Kp6" name="soilParams.Kp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Yi6" class="form-label">Yi:</label>
+                    <input type="number" step="0.01" id="Yi6" name="soilParams.Yi" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div id="forestFields">
+            <div id="forestReclamationCostParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="ks" class="form-label">ks:</label>
+                    <input type="number" step="0.01" id="ks" name="forestReclamationCostParams.ks" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kk" class="form-label">kk:</label>
+                    <input type="number" step="0.01" id="kk" name="forestReclamationCostParams.kk" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="kz" class="form-label">kz:</label>
+                    <input type="number" step="0.01" id="kz" name="forestReclamationCostParams.kz" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="s" class="form-label">s, hec:</label>
+                    <input type="number" step="0.01" id="s" name="forestReclamationCostParams.s" class="form-control">
+                </div>
+            </div>
+
+            <div id="forestProductionLossParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="nv" class="form-label">nv, hrn:</label>
+                    <input type="number" step="0.01" id="nv" name="forestProductionLossParams.nv" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="pl" class="form-label">pl, hrn:</label>
+                    <input type="number" step="0.01" id="pl" name="forestProductionLossParams.pl" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="rp" class="form-label">rp, m^3:</label>
+                    <input type="number" step="0.01" id="rp" name="forestProductionLossParams.rp" class="form-control">
+                </div>
+            </div>
+
+            <div id="forestDamagedTimberLossParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="cd" class="form-label">cd, hrn:</label>
+                    <input type="number" step="0.01" id="cd" name="forestDamagedTimberLossParams.cd" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="cdp" class="form-label">cdp, hrn:</label>
+                    <input type="number" step="0.01" id="cdp" name="forestDamagedTimberLossParams.cdp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="md" class="form-label">md, m^3:</label>
+                    <input type="number" step="0.01" id="md" name="forestDamagedTimberLossParams.md" class="form-control">
+                </div>
+            </div>
+
+            <div id="forestForegoneIncomeParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="cp" class="form-label">cp, hrn/m^3:</label>
+                    <input type="number" step="0.01" id="cp" name="forestForegoneIncomeParams.cp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="zpv" class="form-label">zpv, m^3/hec:</label>
+                    <input type="number" step="0.01" id="zpv" name="forestForegoneIncomeParams.zpv" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="prp" class="form-label">prp, m^3/hec:</label>
+                    <input type="number" step="0.01" id="prp" name="forestForegoneIncomeParams.prp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="vsp" class="form-label">vsp, years:</label>
+                    <input type="number" step="0.01" id="vsp" name="forestForegoneIncomeParams.vsp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="v" class="form-label">v, years:</label>
+                    <input type="number" step="0.01" id="v" name="forestForegoneIncomeParams.v" class="form-control">
+                </div>
+            </div>
+
+            <div id="forestResourceLossParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="sR" class="form-label">s, t:</label>
+                    <input type="number" step="0.01" id="sR" name="forestResourceLossParams.s" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="plR" class="form-label">pl, hrn:</label>
+                    <input type="number" step="0.01" id="plR" name="forestResourceLossParams.pl" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="rpR" class="form-label">rp, hrn:</label>
+                    <input type="number" step="0.01" id="rpR" name="forestResourceLossParams.rp" class="form-control">
+                </div>
+            </div>
+
+            <div id="forestUsageLossParams" style="display:none;" class="mb-3">
+                <div class="mb-3">
+                    <label for="tForest" class="form-label">tForest, years:</label>
+                    <input type="number" step="0.01" id="tForest" name="forestUsageLossParams.tForest" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="ngold" class="form-label">ngold, hrn:</label>
+                    <input type="number" step="0.01" id="ngold" name="forestUsageLossParams.ngold" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="plU" class="form-label">pl, hec:</label>
+                    <input type="number" step="0.01" id="plU" name="forestUsageLossParams.pl" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="rpTkl" class="form-label">rpTkl:</label>
+                    <input type="number" step="0.01" id="rpTkl" name="forestUsageLossParams.rpTkl" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="forestPreparationCostParams" style="display:none;" class="mb-3">
+            <div class="mb-3">
+                <label for="rpg" class="form-label">rpg, hrn:</label>
+                <input type="number" step="0.01" id="rpg" name="forestPreparationCostParams.rpg" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="vza" class="form-label">vza, hrn/hec:</label>
+                <input type="number" step="0.01" id="vza" name="forestPreparationCostParams.vza" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="plP" class="form-label">pl, hec:</label>
+                <input type="number" step="0.01" id="plP" name="forestPreparationCostParams.pl" class="form-control">
+            </div>
+        </div>
+
+        <div id="forestNurseryDamageParams" style="display:none;" class="mb-3">
+            <div class="mb-3">
+                <label for="nzk" class="form-label">nzk, hrn:</label>
+                <input type="number" step="0.01" id="nzk" name="forestNurseryDamageParams.nzk" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="rv" class="form-label">rv, hrn:</label>
+                <input type="number" step="0.01" id="rv" name="forestNurseryDamageParams.rv" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="zk" class="form-label">zk, hrn:</label>
+                <input type="number" step="0.01" id="zk" name="forestNurseryDamageParams.zk" class="form-control">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const damageTypeSelect = document.getElementById('damageType');
+        const crisisDamageTypeSelect = document.getElementById('crisisDamageType');
+
+        // Параметри для кожної підкатегорії вже записані в HTML
+        const categoryDivs = {
+            "Air": {
+                "Air": document.getElementById('airParams')
+            },
+            "Water": {
+                "WaterReturn": document.getElementById('waterReturnParams'),
+                "WaterReturnSeaWaters": document.getElementById('waterReturnSeaWatersParams'),
+                "WaterReturnAccidentClear": document.getElementById('waterReturnAccidentClearParams'),
+                "WaterReturnAccidentClearSeaWaters": document.getElementById('waterReturnAccidentClearSeaWatersParams'),
+                "WaterArbitraryUse": document.getElementById('waterArbitraryUseParams'),
+                "WaterUnderground": document.getElementById('waterUndergroundParams')
+            },
+            "Soil": {
+                "Soil": document.getElementById('soilParams')
+            },
+            "Forest": {
+                "ForestReclamationCost": document.getElementById('forestReclamationCostParams'),
+                "ForestProductionLoss": document.getElementById('forestProductionLossParams'),
+                "ForestDamagedTimberLoss": document.getElementById('forestDamagedTimberLossParams'),
+                "ForestForegoneIncome": document.getElementById('forestForegoneIncomeParams'),
+                "ForestResourceLoss": document.getElementById('forestResourceLossParams'),
+                "ForestUsageLoss": document.getElementById('forestUsageLossParams'),
+                "ForestPreparationCost": document.getElementById('forestPreparationCostParams'),
+                "ForestNurseryDamage": document.getElementById('forestNurseryDamageParams')
+            }
+        };
+
+        // Функція для оновлення варіантів підкатегорій
+        function updateCrisisDamageTypeOptions(options) {
+            crisisDamageTypeSelect.innerHTML = '';
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = '';
+            crisisDamageTypeSelect.appendChild(defaultOption);
+
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                crisisDamageTypeSelect.appendChild(optionElement);
+            });
+        }
+
+        // Функція для приховування всіх параметрів
+            function hideAllParameters() {
+                Object.values(categoryDivs).forEach(subcategory => {
+                    Object.values(subcategory).forEach(div => {
+                        if (div) { // Add a check to ensure div is not null
+                            div.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        // Функція для показу відповідних параметрів
+        function showParameters(damageType, subCategory) {
+            hideAllParameters();
+
+            // Показує параметри відповідної підкатегорії
+            if (categoryDivs[damageType] && categoryDivs[damageType][subCategory]) {
+                categoryDivs[damageType][subCategory].style.display = 'block';
+            }
+        }
+
+        // Обробник події для вибору типу пошкодження
+        damageTypeSelect.addEventListener('change', function() {
+            const damageType = damageTypeSelect.value;
+
+            if (damageType === "Air") {
+                updateCrisisDamageTypeOptions(["Air"]);
+            } else if (damageType === "Water") {
+                updateCrisisDamageTypeOptions([
+                    "WaterReturn",
+                    "WaterReturnSeaWaters",
+                    "WaterReturnAccidentClear",
+                    "WaterReturnAccidentClearSeaWaters",
+                    "WaterArbitraryUse",
+                    "WaterUnderground"
+                ]);
+            } else if (damageType === "Soil") {
+                updateCrisisDamageTypeOptions(["Soil"]);
+            } else if (damageType === "Forest") {
+                updateCrisisDamageTypeOptions([
+                    "ForestReclamationCost",
+                        "ForestProductionLoss",
+                        "ForestDamagedTimberLoss",
+                        "ForestForegoneIncome",
+                        "ForestResourceLoss",
+                        "ForestUsageLoss",
+                        "ForestPreparationCost",
+                        "ForestNurseryDamage",
+                        "ForestHuntingLoss"
+                ]);
+            } else {
+                updateCrisisDamageTypeOptions([]);
+            }
+
+            // При зміні типу пошкодження приховуємо всі параметри
+            hideAllParameters();
+        });
+
+        // Обробник події для вибору підкатегорії
+        crisisDamageTypeSelect.addEventListener('change', function() {
+            const damageType = damageTypeSelect.value;
+            const subCategory = crisisDamageTypeSelect.value;
+
+            if (damageType && subCategory) {
+                showParameters(damageType, subCategory);
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

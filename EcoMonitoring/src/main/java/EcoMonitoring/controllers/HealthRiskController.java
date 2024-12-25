@@ -2,7 +2,7 @@ package EcoMonitoring.controllers;
 
 import EcoMonitoring.models.HealthRisk;
 import EcoMonitoring.models.Substances;
-import EcoMonitoring.models.AgentType;
+import EcoMonitoring.models.Enums.AgentType;
 import EcoMonitoring.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

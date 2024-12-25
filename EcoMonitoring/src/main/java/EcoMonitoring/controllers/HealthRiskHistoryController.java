@@ -1,6 +1,8 @@
 package EcoMonitoring.controllers;
 
 import EcoMonitoring.models.*;
+import EcoMonitoring.models.Enums.AgentType;
+import EcoMonitoring.models.Enums.RiskLevel;
 import EcoMonitoring.repository.Repository;
 import EcoMonitoring.services.HealthRiskService;
 import org.springframework.beans.factory.annotation.Autowired;
